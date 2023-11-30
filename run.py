@@ -14,5 +14,15 @@ def print_board(board):
         print("|" + "|".join(row) + "|")
     print("---------------")
 
+def is_valid_location(board, col):
+    """
+    Checks if a move is valid in a given column
+    """
+    if 0 <= col < 7:
+        return board[0][col] == ' '
+    else: 
+        return False
+
 board = create_board()
-print_board(board)
+print("Is column 0 ok?", is_valid_location(board, 0))
+print("Is column 7 ok?", is_valid_location(board, 7))
