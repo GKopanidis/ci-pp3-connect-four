@@ -32,8 +32,16 @@ def get_next_open_row(board, col):
             return row
     return -1
 
-board = create_board()
-col = 4
+def place_piece(board, row, col, piece):
+    """
+    Place a piece on the game board at specified location
+    """
+    board[row][col] = piece
 
-next_open_row = get_next_open_row(board, col)
-print("next free row in column 2:", next_open_row)
+board = create_board()
+col = 0
+
+row = get_next_open_row(board, col)
+if row != -1:
+    place_piece(board, row, col, 'P')
+    print_board(board)
