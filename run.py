@@ -23,6 +23,17 @@ def is_valid_location(board, col):
     else: 
         return False
 
+def get_next_open_row(board, col):
+    """
+    Finds the next available row in a given column
+    """
+    for row in range(5, -1, -1):
+        if board[row][col] == ' ':
+            return row
+    return -1
+
 board = create_board()
-print("Is column 0 ok?", is_valid_location(board, 0))
-print("Is column 7 ok?", is_valid_location(board, 7))
+col = 4
+
+next_open_row = get_next_open_row(board, col)
+print("next free row in column 2:", next_open_row)
