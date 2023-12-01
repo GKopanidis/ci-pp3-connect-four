@@ -184,6 +184,8 @@ def show_game_instructions():
     print("a seven-column, six-row vertically suspended grid.\n")
     print("The goal of the game is to connect four discs vertically,")
     print("horizontally, or diagonally before your opponent.\n")
+    print("The player is displayed as 'P' on the game board when they")
+    print("place a piece, and the computer is represented by a 'C'.\n")
     input("Press Enter to return to Main Menu!\n")
 
 
