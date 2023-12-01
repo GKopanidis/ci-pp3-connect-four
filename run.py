@@ -12,11 +12,32 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('connect_four')
 
-hof = SHEET.worksheet('hof')
+def main_menu():
+    while True:
+        print("Main Menu:\n")
+        print("1. Start Game")
+        print("2. Game Instructions")
+        print("3. Hall of Fame")
+        print("4. Quit\n")
 
-data = hof.get_all_values()
+        choice = input("Please choose an option (1/2/3/4):\n")
 
-print(data)
+        if choice == '1':
+            start_game()
+        elif choice == '2':
+            show_game_instructions()
+        elif choice == '3':
+            show_hall_of_fame
+        elif choice == '4':
+            print("Good bye. Thank you for playing!")
+            break
+        else:
+            print("Invalid input. Please select one of the available options\n")
+
+def test_main_menu():
+    main_menu()
+
+test_main_menu()
 
 def create_board():
     """
