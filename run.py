@@ -24,13 +24,14 @@ def main_menu():
         print("4. Quit\n")
 
         choice = input("Please choose an option (1/2/3/4):\n")
+        print()
 
         if choice == "1":
             start_game()
         elif choice == "2":
             show_game_instructions()
         elif choice == "3":
-            show_hall_of_fame
+            show_hall_of_fame()
         elif choice == "4":
             print("Good bye. Thank you for playing!")
             break
@@ -39,7 +40,16 @@ def main_menu():
 
 
 def start_game():
-    player_name = input("Please enter your name: ")
+    while True:
+        player_name = input("Please enter your name (min. 3 characters): ")
+        if len(player_name) >= 3:
+            break
+        elif len(player_name) > 0:
+            print("Error: Name must be at least 3 characters long.\n")
+        else:
+            print("Error: Name cannot be empty.\n")
+
+    print()
 
     existing_player, player_index = find_player(player_name)
 
@@ -49,7 +59,6 @@ def start_game():
         print(f"Lost Games: {existing_player['games_lost']}\n")
     else:
         print(f"Welcome {player_name}!\n")
-
 
     while True:
         board = create_board()
@@ -63,7 +72,7 @@ def start_game():
 
             if not col_input:
                 confirm_quit = input("Are you sure you want to quit? (y/n): ").lower()
-                if confirm_quit == 'y':
+                if confirm_quit == "y":
                     print("Quitting the game.")
                     return
                 else:
@@ -101,7 +110,9 @@ def start_game():
                                     update_player_record(player_index, False)
                                     game_over = True
                             else:
-                                print("Invalid move by computer. Skipping computer's turn.\n")
+                                print(
+                                    "Invalid move by computer. Skipping computer's turn.\n"
+                                )
                     else:
                         print("Invalid move. Please choose a valid column.\n")
                 else:
@@ -117,6 +128,7 @@ def start_game():
                 break
 
         play_again = input("Do you want to play again? (y/n):\n").lower()
+        print()
         if play_again != "y":
             print("Returning to Main Menu.")
             break
@@ -173,6 +185,20 @@ def show_game_instructions():
     print("The goal of the game is to connect four discs vertically,")
     print("horizontally, or diagonally before your opponent.\n")
     input("Press Enter to return to Main Menu!\n")
+
+
+def show_hall_of_fame():
+    print("Hall of Fame:\n")
+    print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
+    print("-" * 40)
+
+    player_data = HOF_SHEET.get_all_records()
+    for player in player_data:
+        print(
+            f"{player['player_name']:<20}{player['games_won']:<10}{player['games_lost']:<10}"
+        )
+
+    input("\nPress Enter to return to Main Menu!\n")
 
 
 def create_board():
