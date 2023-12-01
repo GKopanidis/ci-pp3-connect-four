@@ -41,28 +41,33 @@ def main_menu():
 def start_game():
     player_name = input("Please enter your name: ")
 
-    existing_player = find_player(player_name)
+    existing_player, player_index = find_player(player_name)
 
     if existing_player:
-        for player in existing_player:
-            print(f"Welcome back, {player['player_name']}!")
-            print(f"Won Games: {player['games_won']}")
-            print(f"Lost Games: {player['games_lost']}\n")
+        print(f"Welcome back, {existing_player['player_name']}!")
+        print(f"Won Games: {existing_player['games_won']}")
+        print(f"Lost Games: {existing_player['games_lost']}\n")
     else:
         print(f"Welcome {player_name}!\n")
+
 
     while True:
         board = create_board()
         print_board(board)
+        game_over = False
 
-        while True:
+        while not game_over:
             col_input = input(
                 "Choose a column to place your piece (1-7), or press Enter to quit: "
             )
 
             if not col_input:
-                print("Quitting the game.")
-                break
+                confirm_quit = input("Are you sure you want to quit? (y/n): ").lower()
+                if confirm_quit == 'y':
+                    print("Quitting the game.")
+                    return
+                else:
+                    continue
 
             try:
                 col = int(col_input) - 1
@@ -76,24 +81,27 @@ def start_game():
 
                         if check_win(board, "P"):
                             print(f"Congratulations, {player_name}! You won!\n")
-                            break
+                            update_player_record(player_index, True)
+                            game_over = True
 
                         if all(row.count("P") + row.count("O") == 7 for row in board):
                             print("It's a tie!")
-                            break
+                            game_over = True
 
-                        computer_col = random.randint(0, 6)
+                        if not game_over:
+                            computer_col = random.randint(0, 6)
 
-                        if is_valid_location(board, computer_col):
-                            computer_row = get_next_open_row(board, computer_col)
-                            place_piece(board, computer_row, computer_col, "C")
-                            print_board(board)
+                            if is_valid_location(board, computer_col):
+                                computer_row = get_next_open_row(board, computer_col)
+                                place_piece(board, computer_row, computer_col, "C")
+                                print_board(board)
 
-                            if check_win(board, "C"):
-                                print("Computer wins!\n")
-                                break
-                        else:
-                            print("Invalid move by computer. Skipping computer's turn.\n")
+                                if check_win(board, "C"):
+                                    print("Computer wins!\n")
+                                    update_player_record(player_index, False)
+                                    game_over = True
+                            else:
+                                print("Invalid move by computer. Skipping computer's turn.\n")
                     else:
                         print("Invalid move. Please choose a valid column.\n")
                 else:
@@ -104,6 +112,9 @@ def start_game():
                 print(
                     "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
                 )
+
+            if game_over:
+                break
 
         play_again = input("Do you want to play again? (y/n):\n").lower()
         if play_again != "y":
@@ -116,11 +127,11 @@ def find_player(player_name):
     Find a player in the hof sheet by name
     """
     player_data = HOF_SHEET.get_all_records()
-    for player in player_data:
+    for index, player in enumerate(player_data):
         if player["player_name"] == player_name:
-            return player_data
-    add_new_player(player_name)
-    return None
+            return player, index + 2
+    new_index = add_new_player(player_name)
+    return None, new_index
 
 
 def add_new_player(player_name):
@@ -130,6 +141,28 @@ def add_new_player(player_name):
     new_player_data = [player_name, 0, 0]
     HOF_SHEET.append_row(new_player_data)
     print(f"New Player {player_name} added...\n")
+
+    player_data = HOF_SHEET.get_all_records()
+    new_index = len(player_data) + 1
+    return new_index
+
+
+def update_player_record(player_index, won):
+    """
+    Update the player win and loss in the google sheet
+    """
+    player_record = HOF_SHEET.row_values(player_index)
+    new_wins = int(player_record[1])
+    new_losses = int(player_record[2])
+
+    if won:
+        new_wins += 1
+        HOF_SHEET.update_cell(player_index, 2, new_wins)
+    else:
+        new_losses += 1
+        HOF_SHEET.update_cell(player_index, 3, new_losses)
+
+    return f"Updated record for player at index {player_index}: Wins - {new_wins}, Losses - {new_losses}"
 
 
 def show_game_instructions():
