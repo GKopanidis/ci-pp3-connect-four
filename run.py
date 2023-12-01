@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+import random
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -37,7 +38,7 @@ def main_menu():
 
 
 def start_game():
-    player_name = input("Please enter your name:")
+    player_name = input("Please enter your name: ")
     print(f"Welcome, {player_name}!")
 
     while True:
@@ -70,6 +71,18 @@ def start_game():
                         if all(row.count("P") + row.count("O") == 7 for row in board):
                             print("It's a tie!")
                             break
+
+                        computer_col = random.randint(0, 6)
+                        if is_valid_location(board, computer_col):
+                            computer_row = get_next_open_row(board, computer_col)
+                            place_piece(board, computer_row, computer_col, "C")
+                            print_board(board)
+
+                            if check_win(board, "C"):
+                                print("Computer wins!\n")
+                                break
+                        else:
+                            print("Invalid move by computer. Skipping computer's turn.")
                     else:
                         print("Invalid move. Please choose a valid column.")
                 else:
@@ -83,7 +96,7 @@ def start_game():
 
         play_again = input("Do you want to play again? (y/n):\n").lower()
         if play_again != "y":
-            print("Back to Main Menu!\n")
+            print("Returning to Main Menu.")
             break
 
 
