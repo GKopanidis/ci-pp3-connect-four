@@ -40,7 +40,16 @@ def main_menu():
 
 def start_game():
     player_name = input("Please enter your name: ")
-    print(f"Welcome, {player_name}!")
+
+    existing_player = find_player(player_name)
+
+    if existing_player:
+        for player in existing_player:
+            print(f"Welcome back, {player['player_name']}!")
+            print(f"Won Games: {player['games_won']}")
+            print(f"Lost Games: {player['games_lost']}\n")
+    else:
+        print(f"Welcome new player, {player_name}!")
 
     while True:
         board = create_board()
@@ -53,7 +62,7 @@ def start_game():
 
             if not col_input:
                 print("Quitting the game.")
-                return
+                break
 
             try:
                 col = int(col_input) - 1
@@ -74,6 +83,7 @@ def start_game():
                             break
 
                         computer_col = random.randint(0, 6)
+
                         if is_valid_location(board, computer_col):
                             computer_row = get_next_open_row(board, computer_col)
                             place_piece(board, computer_row, computer_col, "C")
@@ -83,16 +93,16 @@ def start_game():
                                 print("Computer wins!\n")
                                 break
                         else:
-                            print("Invalid move by computer. Skipping computer's turn.")
+                            print("Invalid move by computer. Skipping computer's turn.\n")
                     else:
-                        print("Invalid move. Please choose a valid column.")
+                        print("Invalid move. Please choose a valid column.\n")
                 else:
                     print(
-                        "Column number out of range. Please choose a number between 1 and 7."
+                        "Column number out of range. Please choose a number between 1 and 7.\n"
                     )
             except ValueError:
                 print(
-                    "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit."
+                    "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
                 )
 
         play_again = input("Do you want to play again? (y/n):\n").lower()
@@ -110,16 +120,6 @@ def find_player(player_name):
         if player["player_name"] == player_name:
             return player_data
     return None
-
-
-player_name = "SP4RTaN"
-result = find_player(player_name)
-
-if result:
-    print(f"Player {player_name} found in the Hall of Fame!")
-    print(result)
-else:
-    print(f"Player {player_name} not found in the Hall of Fame.")
 
 
 def show_game_instructions():
