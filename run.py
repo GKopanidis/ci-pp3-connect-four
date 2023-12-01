@@ -67,9 +67,7 @@ def start_game():
                             print(f"Congratulations, {player_name}! You won!\n")
                             break
 
-                        if all(
-                            row.count("P") + row.count("O") == 7 for row in board
-                        ):
+                        if all(row.count("P") + row.count("O") == 7 for row in board):
                             print("It's a tie!")
                             break
                     else:
@@ -87,6 +85,17 @@ def start_game():
         if play_again != "y":
             print("Back to Main Menu!\n")
             break
+
+
+def show_game_instructions():
+    print("Game Instructions:\n")
+    print("Connect Four is a two-player connection game in which")
+    print("the players take turns dropping discs from the top into")
+    print("a seven-column, six-row vertically suspended grid.\n")
+    print("The goal of the game is to connect four discs vertically,")
+    print("horizontally, or diagonally before your opponent.\n")
+    input("Press Enter to return to Main Menu!\n")
+
 
 def create_board():
     """
