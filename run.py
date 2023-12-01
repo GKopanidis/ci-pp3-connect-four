@@ -49,7 +49,7 @@ def start_game():
             print(f"Won Games: {player['games_won']}")
             print(f"Lost Games: {player['games_lost']}\n")
     else:
-        print(f"Welcome new player, {player_name}!")
+        print(f"Welcome {player_name}!\n")
 
     while True:
         board = create_board()
@@ -119,7 +119,17 @@ def find_player(player_name):
     for player in player_data:
         if player["player_name"] == player_name:
             return player_data
+    add_new_player(player_name)
     return None
+
+
+def add_new_player(player_name):
+    """
+    Adds a new player to the hof sheet
+    """
+    new_player_data = [player_name, 0, 0]
+    HOF_SHEET.append_row(new_player_data)
+    print(f"New Player {player_name} added...\n")
 
 
 def show_game_instructions():
@@ -147,7 +157,7 @@ def print_board(board):
     print("---------------")
     for row in board:
         print("|" + "|".join(row) + "|")
-    print("---------------")
+    print("---------------\n")
 
 
 def is_valid_location(board, col):
