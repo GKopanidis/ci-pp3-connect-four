@@ -12,6 +12,7 @@ CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("connect_four")
+HOF_SHEET = SHEET.worksheet("hof")
 
 
 def main_menu():
@@ -98,6 +99,27 @@ def start_game():
         if play_again != "y":
             print("Returning to Main Menu.")
             break
+
+
+def find_player(player_name):
+    """
+    Find a player in the hof sheet by name
+    """
+    player_data = HOF_SHEET.get_all_records()
+    for player in player_data:
+        if player["player_name"] == player_name:
+            return player_data
+    return None
+
+
+player_name = "SP4RTaN"
+result = find_player(player_name)
+
+if result:
+    print(f"Player {player_name} found in the Hall of Fame!")
+    print(result)
+else:
+    print(f"Player {player_name} not found in the Hall of Fame.")
 
 
 def show_game_instructions():
