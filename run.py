@@ -1,3 +1,23 @@
+import gspread
+from google.oauth2.service_account import Credentials
+
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+    ]
+
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('connect_four')
+
+hof = SHEET.worksheet('hof')
+
+data = hof.get_all_values()
+
+print(data)
+
 def create_board():
     """
     Create a game board with 6 rows and 7 columns
@@ -88,20 +108,3 @@ def check_win(board, piece):
                 return True
 
     return False
-
-
-board = create_board()
-place_piece(board, 0, 0, "C")
-place_piece(board, 0, 1, "C")
-place_piece(board, 0, 2, "C")
-place_piece(board, 0, 3, "P")
-place_piece(board, 0, 4, "P")
-place_piece(board, 0, 5, "P")
-place_piece(board, 0, 6, "P")
-
-if check_win(board, "P"):
-    print("Player wins!")
-elif check_win(board, "C"):
-    print("Computer wins!")
-else:
-    print("Nobody has won yet.")
