@@ -1,6 +1,10 @@
+# Library imports
+
 import gspread
 from google.oauth2.service_account import Credentials
 import random
+
+# API setup
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -14,8 +18,13 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("connect_four")
 HOF_SHEET = SHEET.worksheet("hof")
 
+# Main function
+
 
 def main_menu():
+    """
+    Show welcome message and menu
+    """
     print(
         r"""
  _    _  ____  __    ___  _____  __  __  ____    ____  _____           
@@ -65,7 +74,13 @@ def main_menu():
             print("Invalid input. Please select one of the available options\n")
 
 
+# Start game
+
+
 def start_game():
+    """
+    Starting the game
+    """
     while True:
         player_name = input("Please enter your name (min. 3 characters): \n")
         if len(player_name) >= 3:
@@ -165,6 +180,9 @@ def start_game():
             break
 
 
+# Find player
+
+
 def find_player(player_name):
     """
     Find a player in the hof sheet by name
@@ -175,6 +193,9 @@ def find_player(player_name):
             return player, index + 2
     new_index = add_new_player(player_name)
     return None, new_index
+
+
+# Add player if not found in sheet
 
 
 def add_new_player(player_name):
@@ -188,6 +209,9 @@ def add_new_player(player_name):
     player_data = HOF_SHEET.get_all_records()
     new_index = len(player_data) + 1
     return new_index
+
+
+# Update records
 
 
 def update_player_record(player_index, won):
@@ -208,48 +232,7 @@ def update_player_record(player_index, won):
     return f"Updated record for player at index {player_index}: Wins - {new_wins}, Losses - {new_losses}"
 
 
-def show_game_instructions():
-    print(
-        r"""
-  ___    __    __  __  ____                                             
- / __)  /__\  (  \/  )( ___)                                            
-( (_-. /(__)\  )    (  )__)                                             
- \___/(__)(__)(_/\/\_)(____)                                            
- ____  _  _  ___  ____  ____  __  __  ___  ____  ____  _____  _  _  ___ 
-(_  _)( \( )/ __)(_  _)(  _ \(  )(  )/ __)(_  _)(_  _)(  _  )( \( )/ __)
- _)(_  )  ( \__ \  )(   )   / )(__)(( (__   )(   _)(_  )(_)(  )  ( \__ \
-(____)(_)\_)(___/ (__) (_)\_)(______)\___) (__) (____)(_____)(_)\_)(___/ 
- """
-    )
-    print("Connect Four is a two-player connection game in which")
-    print("the players take turns dropping discs from the top into")
-    print("a seven-column, six-row vertically suspended grid.\n")
-    print("The goal of the game is to connect four discs vertically,")
-    print("horizontally, or diagonally before your opponent.\n")
-    print("The player is displayed as 'P' on the game board when they")
-    print("place a piece, and the computer is represented by a 'C'.\n")
-    input("Press Enter to return to Main Menu!\n")
-
-
-def show_hall_of_fame():
-    print(
-        r"""
- _   _    __    __    __      _____  ____    ____  __    __  __  ____ 
-( )_( )  /__\  (  )  (  )    (  _  )( ___)  ( ___)/__\  (  \/  )( ___)
- ) _ (  /(__)\  )(__  )(__    )(_)(  )__)    )__)/(__)\  )    (  )__) 
-(_) (_)(__)(__)(____)(____)  (_____)(__)    (__)(__)(__)(_/\/\_)(____)
-"""
-    )
-    print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
-    print("-" * 40)
-
-    player_data = HOF_SHEET.get_all_records()
-    for player in player_data:
-        print(
-            f"{player['player_name']:<20}{player['games_won']:<10}{player['games_lost']:<10}"
-        )
-
-    input("\nPress Enter to return to Main Menu!\n")
+# Create board
 
 
 def create_board():
@@ -257,6 +240,9 @@ def create_board():
     Create a game board with 6 rows and 7 columns
     """
     return [[" " for _ in range(7)] for _ in range(6)]
+
+
+# Print board
 
 
 def print_board(board):
@@ -270,6 +256,9 @@ def print_board(board):
     print("---------------\n")
 
 
+# Validation check
+
+
 def is_valid_location(board, col):
     """
     Checks if a move is valid in a given column
@@ -278,6 +267,9 @@ def is_valid_location(board, col):
         return board[0][col] == " "
     else:
         return False
+
+
+# Find next open row
 
 
 def get_next_open_row(board, col):
@@ -290,11 +282,17 @@ def get_next_open_row(board, col):
     return -1
 
 
+# Place piece
+
+
 def place_piece(board, row, col, piece):
     """
     Place a piece on the game board at specified location
     """
     board[row][col] = piece
+
+
+# Check win conditions
 
 
 def check_win(board, piece):
@@ -342,6 +340,56 @@ def check_win(board, piece):
                 return True
 
     return False
+
+
+# Game instructions
+
+
+def show_game_instructions():
+    print(
+        r"""
+  ___    __    __  __  ____                                             
+ / __)  /__\  (  \/  )( ___)                                            
+( (_-. /(__)\  )    (  )__)                                             
+ \___/(__)(__)(_/\/\_)(____)                                            
+ ____  _  _  ___  ____  ____  __  __  ___  ____  ____  _____  _  _  ___ 
+(_  _)( \( )/ __)(_  _)(  _ \(  )(  )/ __)(_  _)(_  _)(  _  )( \( )/ __)
+ _)(_  )  ( \__ \  )(   )   / )(__)(( (__   )(   _)(_  )(_)(  )  ( \__ \
+(____)(_)\_)(___/ (__) (_)\_)(______)\___) (__) (____)(_____)(_)\_)(___/ 
+ """
+    )
+    print("Connect Four is a two-player connection game in which")
+    print("the players take turns dropping discs from the top into")
+    print("a seven-column, six-row vertically suspended grid.\n")
+    print("The goal of the game is to connect four discs vertically,")
+    print("horizontally, or diagonally before your opponent.\n")
+    print("The player is displayed as 'P' on the game board when they")
+    print("place a piece, and the computer is represented by a 'C'.\n")
+    input("Press Enter to return to Main Menu!\n")
+
+
+# Hall of Fame
+
+
+def show_hall_of_fame():
+    print(
+        r"""
+ _   _    __    __    __      _____  ____    ____  __    __  __  ____ 
+( )_( )  /__\  (  )  (  )    (  _  )( ___)  ( ___)/__\  (  \/  )( ___)
+ ) _ (  /(__)\  )(__  )(__    )(_)(  )__)    )__)/(__)\  )    (  )__) 
+(_) (_)(__)(__)(____)(____)  (_____)(__)    (__)(__)(__)(_/\/\_)(____)
+"""
+    )
+    print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
+    print("-" * 40)
+
+    player_data = HOF_SHEET.get_all_records()
+    for player in player_data:
+        print(
+            f"{player['player_name']:<20}{player['games_won']:<10}{player['games_lost']:<10}"
+        )
+
+    input("\nPress Enter to return to Main Menu!\n")
 
 
 main_menu()
