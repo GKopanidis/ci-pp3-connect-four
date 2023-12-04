@@ -27,14 +27,14 @@ HOF_SHEET = SHEET.worksheet("hof")
 
 
 def main_menu():
-    """
-    Show welcome message and menu
-    """
-    result = pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
-    print(Fore.YELLOW + result)
-    print(Style.RESET_ALL)
-
     while True:
+        """
+        Show welcome message and menu
+        """
+        result = pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
+        print(Fore.YELLOW + result)
+        print(Style.RESET_ALL)
+
         print("1. Start Game")
         print("2. Game Instructions")
         print("3. Hall of Fame")
@@ -44,47 +44,30 @@ def main_menu():
         print()
 
         if choice == "1":
-            start_game()
+            player_name = input(
+                "Please enter your name (min. 3 characters with at least 1 letter): \n"
+            )
+            if len(player_name) >= 3 and any(char.isalpha() for char in player_name):
+                start_game(player_name)
+            else:
+                print(
+                    Fore.RED
+                    + "Invalid name. Please enter at least 3 characters with at least 1 letter.\n"
+                )
+                print(Style.RESET_ALL)
         elif choice == "2":
             show_game_instructions()
         elif choice == "3":
             show_hall_of_fame()
         elif choice == "4":
-            result = pyfiglet.figlet_format(
-                "ByeBye, thank you for playing!", font="bulbhead"
-            )
-            print(Fore.YELLOW + result)
-            print(Style.RESET_ALL)
+            print(Fore.YELLOW + "ByeBye, thank you for playing!" + Style.RESET_ALL)
             break
-        else:
-            print(
-                Fore.RED + "Invalid input. Please select one of the available options\n"
-            )
-            print(Style.RESET_ALL)
 
 
 # Start game
 
 
-def start_game():
-    """
-    Starting the game
-    """
-    while True:
-        player_name = input("Please enter your name (min. 3 characters): \n")
-        print()
-        if len(player_name) >= 3 and any(char.isalpha() for char in player_name):
-            break
-        elif len(player_name) > 0:
-            print(
-                Fore.RED
-                + "Error: Name must be at least 3 characters long and contain at least one letter.\n"
-            )
-            print(Style.RESET_ALL)
-        else:
-            print(Fore.RED + "Error: Name cannot be empty.\n")
-            print(Style.RESET_ALL)
-
+def start_game(player_name):
     print()
 
     existing_player, player_index = find_player(player_name)
@@ -102,24 +85,32 @@ def start_game():
         board = create_board()
         print_board(board)
         game_over = False
+        quit_game = False
 
         while not game_over:
             col_input = input(
                 "Choose a column to place your piece (1-7), or press 'Q' to quit: \n"
             )
 
-            if col_input.lower() == "q" or col_input.lower() == "Q":
-                confirm_quit = input("Are you sure you want to quit? (y/n): \n").lower()
-                print()
-                if confirm_quit == "y":
-                    print("Quitting the game.")
+            if col_input.lower() == "q":
+                while True:
+                    confirm_quit = input(
+                        "Are you sure you want to quit? (y/n): \n"
+                    ).lower()
+                    if confirm_quit == "y":
+                        print("\nQuitting the game.\n")
+                        main_menu()
+                        return
+                    elif confirm_quit == "n":
+                        break
+                    else:
+                        print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n")
+                        print(Style.RESET_ALL)
+                if quit_game:
+                    main_menu()
                     return
-                else:
-                    continue
-
-            try:
+            elif col_input.isdigit():
                 col = int(col_input) - 1
-
                 if 0 <= col < 7:
                     if is_valid_location(board, col):
                         row = get_next_open_row(board, col)
@@ -180,23 +171,34 @@ def start_game():
                         + "Column number out of range. Please choose a number between 1 and 7.\n"
                     )
                     print(Style.RESET_ALL)
-            except ValueError:
+            else:
                 print()
                 print(
                     Fore.RED
-                    + "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
+                    + "Invalid input. Please enter a valid number between 1 and 7 or 'Q' to quit.\n"
                 )
                 print(Style.RESET_ALL)
 
-            if game_over:
-                break
+            if game_over or quit_game:
+                play_again = input("Do you want to play again? (y/n):\n").lower()
+                print()
+                if play_again == "y":
+                    print(Fore.BLUE + "Starting a new game.")
+                    print(Style.RESET_ALL)
+                    return start_game(player_name)
+                else:
+                    print(Fore.BLUE + "Returning to Main Menu.")
+                    print(Style.RESET_ALL)
+                    return
 
-        play_again = input("Do you want to play again? (y/n):\n").lower()
-        print()
-        if play_again != "y":
-            print(Fore.BLUE + "Returning to Main Menu.")
-            print(Style.RESET_ALL)
-            break
+    return
+
+    play_again = input("Do you want to play again? (y/n):\n").lower()
+    print()
+    if play_again != "y":
+        print(Fore.BLUE + "Returning to Main Menu.")
+        print(Style.RESET_ALL)
+        return main_menu()
 
 
 # Find player
@@ -387,8 +389,20 @@ def show_game_instructions():
     print("a seven-column, six-row vertically suspended grid.\n")
     print("The goal of the game is to connect four discs vertically,")
     print("horizontally, or diagonally before your opponent.\n")
-    print("The player is displayed as 'P' on the game board when they")
-    print("place a piece, and the computer is represented by a 'C'.\n")
+    print(
+        ("The player is displayed as ")
+        + Fore.GREEN
+        + "P"
+        + Style.RESET_ALL
+        + " on the game board when they"
+    )
+    print(
+        ("place a piece, and the computer is represented by a ")
+        + Fore.RED
+        + "C"
+        + Style.RESET_ALL
+        + ".\n"
+    )
     print("-" * 60)
     print()
     input(Fore.BLUE + "Press Enter to return to Main Menu!\n")
