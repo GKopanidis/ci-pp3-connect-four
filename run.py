@@ -16,8 +16,23 @@ HOF_SHEET = SHEET.worksheet("hof")
 
 
 def main_menu():
+    print(
+        r"""
+ __      __         .__                                      __                                    
+/  \    /  \  ____  |  |    ____   ____    _____    ____   _/  |_  ____                            
+\   \/\/   /_/ __ \ |  |  _/ ___\ /  _ \  /     \ _/ __ \  \   __\/  _ \                           
+ \        / \  ___/ |  |__\  \___(  <_> )|  Y Y  \\  ___/   |  | (  <_> )                          
+  \__/\  /   \___  >|____/ \___  >\____/ |__|_|  / \___  >  |__|  \____/                           
+       \/        \/            \/              \/      \/                                          
+_________                                          __           ___________                     ._.
+\_   ___ \   ____    ____    ____    ____   ____ _/  |_         \_   _____/____   __ __ _______ | |
+/    \  \/  /  _ \  /    \  /    \ _/ __ \_/ ___\\   __\  ______ |    __) /  _ \ |  |  \\_  __ \| |
+\     \____(  <_> )|   |  \|   |  \\  ___/\  \___ |  |   /_____/ |     \ (  <_> )|  |  / |  | \/ \|
+ \______  / \____/ |___|  /|___|  / \___  >\___  >|__|           \___  /  \____/ |____/  |__|    __
+        \/              \/      \/      \/     \/                    \/                          \/
+"""
+    )
     while True:
-        print("Main Menu:\n")
         print("1. Start Game")
         print("2. Game Instructions")
         print("3. Hall of Fame")
@@ -33,7 +48,27 @@ def main_menu():
         elif choice == "3":
             show_hall_of_fame()
         elif choice == "4":
-            print("Good bye. Thank you for playing!")
+            print(
+                r"""
+  ________                     .___ ___.                                                
+ /  _____/   ____    ____    __| _/ \_ |__  ___.__.  ____                               
+/   \  ___  /  _ \  /  _ \  / __ |   | __ \<   |  |_/ __ \                              
+\    \_\  \(  <_> )(  <_> )/ /_/ |   | \_\ \\___  |\  ___/                              
+ \______  / \____/  \____/ \____ |   |___  // ____| \___  > /\                          
+        \/                      \/       \/ \/          \/  \/                          
+___________.__                      __                               _____              
+\__    ___/|  |__  _____     ____  |  | __  ___.__.  ____   __ __  _/ ____\____ _______ 
+  |    |   |  |  \ \__  \   /    \ |  |/ / <   |  | /  _ \ |  |  \ \   __\/  _ \\_  __ \
+  |    |   |   Y  \ / __ \_|   |  \|    <   \___  |(  <_> )|  |  /  |  | (  <_> )|  | \/
+  |____|   |___|  /(____  /|___|  /|__|_ \  / ____| \____/ |____/   |__|  \____/ |__|   
+        .__     \/      \/   .__\/      \/  \/  ._.                                     
+______  |  |  _____   ___.__.|__|  ____    ____ | |                                     
+\____ \ |  |  \__  \ <   |  ||  | /    \  / ___\| |                                     
+|  |_> >|  |__ / __ \_\___  ||  ||   |  \/ /_/  >\|                                     
+|   __/ |____/(____  // ____||__||___|  /\___  / __                                     
+|__|               \/ \/              \//_____/  \/                                     
+"""
+            )
             break
         else:
             print("Invalid input. Please select one of the available options\n")
@@ -41,7 +76,7 @@ def main_menu():
 
 def start_game():
     while True:
-        player_name = input("Please enter your name (min. 3 characters): ")
+        player_name = input("Please enter your name (min. 3 characters): \n")
         if len(player_name) >= 3:
             break
         elif len(player_name) > 0:
@@ -67,11 +102,12 @@ def start_game():
 
         while not game_over:
             col_input = input(
-                "Choose a column to place your piece (1-7), or press Enter to quit: "
+                "Choose a column to place your piece (1-7), or press Enter to quit: \n"
             )
 
             if not col_input:
-                confirm_quit = input("Are you sure you want to quit? (y/n): ").lower()
+                confirm_quit = input("Are you sure you want to quit? (y/n): \n").lower()
+                print("")
                 if confirm_quit == "y":
                     print("Quitting the game.")
                     return
@@ -178,7 +214,21 @@ def update_player_record(player_index, won):
 
 
 def show_game_instructions():
-    print("Game Instructions:\n")
+    print(
+        r"""
+  ________                                                                           
+ /  _____/ _____     _____    ____                                                   
+/   \  ___ \__  \   /     \ _/ __ \                                                  
+\    \_\  \ / __ \_|  Y Y  \\  ___/                                                  
+ \______  /(____  /|__|_|  / \___  >                                                 
+.___    \/      \/     __\/      \/                 __   .__                         
+|   |  ____    _______/  |_ _______  __ __   ____ _/  |_ |__|  ____    ____    ______
+|   | /    \  /  ___/\   __\\_  __ \|  |  \_/ ___\\   __\|  | /  _ \  /    \  /  ___/
+|   ||   |  \ \___ \  |  |   |  | \/|  |  /\  \___ |  |  |  |(  <_> )|   |  \ \___ \ 
+|___||___|  //____  > |__|   |__|   |____/  \___  >|__|  |__| \____/ |___|  //____  >
+          \/      \/                            \/                        \/      \/ 
+ """
+    )
     print("Connect Four is a two-player connection game in which")
     print("the players take turns dropping discs from the top into")
     print("a seven-column, six-row vertically suspended grid.\n")
@@ -190,7 +240,16 @@ def show_game_instructions():
 
 
 def show_hall_of_fame():
-    print("Hall of Fame:\n")
+    print(
+        r"""
+  ___ ___          .__   .__             _____  ___________                         
+ /   |   \ _____   |  |  |  |     ____ _/ ____\ \_   _____/_____     _____    ____  
+/    ~    \\__  \  |  |  |  |    /  _ \\   __\   |    __)  \__  \   /     \ _/ __ \ 
+\    Y    / / __ \_|  |__|  |__ (  <_> )|  |     |     \    / __ \_|  Y Y  \\  ___/ 
+ \___|_  / (____  /|____/|____/  \____/ |__|     \___  /   (____  /|__|_|  / \___  >
+       \/       \/                                   \/         \/       \/      \/
+       """
+    )
     print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
     print("-" * 40)
 
