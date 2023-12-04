@@ -4,6 +4,9 @@ import gspread
 from google.oauth2.service_account import Credentials
 import random
 import pyfiglet
+from colorama import just_fix_windows_console
+just_fix_windows_console()
+from colorama import Fore, Back, Style
 
 # API setup
 
@@ -27,7 +30,8 @@ def main_menu():
     Show welcome message and menu
     """
     result = pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
-    print(result)
+    print(Fore.YELLOW + result)
+    print(Style.RESET_ALL)
 
     while True:
         print("1. Start Game")
@@ -48,10 +52,12 @@ def main_menu():
             result = pyfiglet.figlet_format(
                 "ByeBye, thank you for playing!", font="bulbhead"
             )
-            print(result)
+            print(Fore.YELLOW + result)
+            print(Style.RESET_ALL)
             break
         else:
-            print("Invalid input. Please select one of the available options\n")
+            print(Fore.RED + "Invalid input. Please select one of the available options\n")
+            print(Style.RESET_ALL)
 
 
 # Start game
@@ -63,23 +69,28 @@ def start_game():
     """
     while True:
         player_name = input("Please enter your name (min. 3 characters): \n")
+        print()
         if len(player_name) >= 3:
             break
         elif len(player_name) > 0:
-            print("Error: Name must be at least 3 characters long.\n")
+            print(Fore.RED + "Error: Name must be at least 3 characters long.\n")
+            print(Style.RESET_ALL)
         else:
-            print("Error: Name cannot be empty.\n")
+            print(Fore.RED + "Error: Name cannot be empty.\n")
+            print(Style.RESET_ALL)
 
     print()
 
     existing_player, player_index = find_player(player_name)
 
     if existing_player:
-        print(f"Welcome back, {existing_player['player_name']}!")
-        print(f"Won Games: {existing_player['games_won']}")
-        print(f"Lost Games: {existing_player['games_lost']}\n")
+        print(Fore.CYAN + f"Welcome back, {existing_player['player_name']}!")
+        print(Fore.GREEN + f"Won Games: {existing_player['games_won']}")
+        print(Fore.RED + f"Lost Games: {existing_player['games_lost']}\n")
+        print(Style.RESET_ALL)
     else:
-        print(f"Welcome {player_name}!\n")
+        print(Fore.CYAN + f"Welcome, {player_name}!\n")
+        print(Style.RESET_ALL)
 
     while True:
         board = create_board()
@@ -93,7 +104,7 @@ def start_game():
 
             if not col_input:
                 confirm_quit = input("Are you sure you want to quit? (y/n): \n").lower()
-                print("")
+                print()
                 if confirm_quit == "y":
                     print("Quitting the game.")
                     return
@@ -106,17 +117,19 @@ def start_game():
                 if 0 <= col < 7:
                     if is_valid_location(board, col):
                         row = get_next_open_row(board, col)
-                        place_piece(board, row, col, "P")
+                        place_piece(board, row, col, Fore.GREEN + "P" + Style.RESET_ALL)
 
                         print_board(board)
 
-                        if check_win(board, "P"):
-                            print(f"Congratulations, {player_name}! You won!\n")
+                        if check_win(board, Fore.GREEN + "P" + Style.RESET_ALL):
+                            print(Fore.GREEN + f"Congratulations, {player_name}! You won!\n")
+                            print(Style.RESET_ALL)
                             update_player_record(player_index, True)
                             game_over = True
 
                         if all(row.count("P") + row.count("O") == 7 for row in board):
-                            print("It's a tie!")
+                            print(Fore.YELLOW + "It's a tie!")
+                            print(Style.RESET_ALL)
                             game_over = True
 
                         if not game_over:
@@ -124,31 +137,35 @@ def start_game():
 
                             if is_valid_location(board, computer_col):
                                 computer_row = get_next_open_row(board, computer_col)
-                                place_piece(board, computer_row, computer_col, "C")
+                                place_piece(board, computer_row, computer_col, Fore.RED + "C" + Style.RESET_ALL)
                                 print_board(board)
+                                print(Style.RESET_ALL)
 
-                                if check_win(board, "C"):
-                                    print("Computer wins!\n")
+                                if check_win(board, Fore.RED + "C" + Style.RESET_ALL):
+                                    print(Fore.RED + "Computer wins!\n")
+                                    print(Style.RESET_ALL)
                                     update_player_record(player_index, False)
                                     game_over = True
                             else:
-                                print("")
-                                print(
+                                print()
+                                print(Fore.RED + 
                                     "Invalid move by computer. Skipping computer's turn.\n"
                                 )
+                                print(Style.RESET_ALL)
                     else:
-                        print("")
-                        print("Invalid move. Please choose a valid column.\n")
+                        print()
+                        print(Fore.RED + "Invalid move. Please choose a valid column.\n")
+                        print(Style.RESET_ALL)
                 else:
-                    print("")
-                    print(
-                        "Column number out of range. Please choose a number between 1 and 7.\n"
-                    )
+                    print()
+                    print(Fore.RED + "Column number out of range. Please choose a number between 1 and 7.\n")
+                    print(Style.RESET_ALL)
             except ValueError:
-                print("")
-                print(
+                print()
+                print(Fore.RED + 
                     "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
                 )
+                print(Style.RESET_ALL)
 
             if game_over:
                 break
@@ -156,7 +173,8 @@ def start_game():
         play_again = input("Do you want to play again? (y/n):\n").lower()
         print()
         if play_again != "y":
-            print("Returning to Main Menu.")
+            print(Fore.BLUE + "Returning to Main Menu.")
+            print(Style.RESET_ALL)
             break
 
 
@@ -184,7 +202,8 @@ def add_new_player(player_name):
     """
     new_player_data = [player_name, 0, 0]
     HOF_SHEET.append_row(new_player_data)
-    print(f"New Player {player_name} added...\n")
+    print(Fore.GREEN + f"New Player {player_name} added...\n")
+    print(Style.RESET_ALL)
 
     player_data = HOF_SHEET.get_all_records()
     new_index = len(player_data) + 1
@@ -327,15 +346,20 @@ def check_win(board, piece):
 
 def show_game_instructions():
     result = pyfiglet.figlet_format("Game Instructions", font="bulbhead")
-    print(result)
-    print("Connect Four is a two-player connection game in which")
+    print(Fore.YELLOW + result)
+    print(Style.RESET_ALL)
+    print("-" * 60)
+    print("\nConnect Four is a two-player connection game in which")
     print("the players take turns dropping discs from the top into")
     print("a seven-column, six-row vertically suspended grid.\n")
     print("The goal of the game is to connect four discs vertically,")
     print("horizontally, or diagonally before your opponent.\n")
     print("The player is displayed as 'P' on the game board when they")
     print("place a piece, and the computer is represented by a 'C'.\n")
-    input("Press Enter to return to Main Menu!\n")
+    print("-" * 60)
+    print()
+    input(Fore.BLUE + "Press Enter to return to Main Menu!\n")
+    print(Style.RESET_ALL)
 
 
 # Hall of Fame
@@ -343,7 +367,8 @@ def show_game_instructions():
 
 def show_hall_of_fame():
     result = pyfiglet.figlet_format("Hall of Fame", font="bulbhead")
-    print(result)
+    print(Fore.YELLOW + result)
+    print(Style.RESET_ALL)
     print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
     print("-" * 40)
 
@@ -352,8 +377,10 @@ def show_hall_of_fame():
         print(
             f"{player['player_name']:<20}{player['games_won']:<10}{player['games_lost']:<10}"
         )
+    print("-" * 40)
 
-    input("\nPress Enter to return to Main Menu!\n")
+    input(Fore.BLUE + "\nPress Enter to return to Main Menu!\n")
+    print(Style.RESET_ALL)
 
 
 # Main menu
