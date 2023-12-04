@@ -3,6 +3,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import random
+import pyfiglet
 
 # API setup
 
@@ -25,18 +26,9 @@ def main_menu():
     """
     Show welcome message and menu
     """
-    print(
-        r"""
- _    _  ____  __    ___  _____  __  __  ____    ____  _____           
-( \/\/ )( ___)(  )  / __)(  _  )(  \/  )( ___)  (_  _)(  _  )          
- )    (  )__)  )(__( (__  )(_)(  )    (  )__)     )(   )(_)(           
-(__/\__)(____)(____)\___)(_____)(_/\/\_)(____)   (__) (_____)          
-  ___  _____  _  _  _  _  ____  ___  ____    ____  _____  __  __  ____ 
- / __)(  _  )( \( )( \( )( ___)/ __)(_  _)  ( ___)(  _  )(  )(  )(  _ \
-( (__  )(_)(  )  (  )  (  )__)( (__   )(     )__)  )(_)(  )(__)(  )   /
- \___)(_____)(_)\_)(_)\_)(____)\___) (__)   (__)  (_____)(______)(_)\_)
-"""
-    )
+    result = pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
+    print(result)
+
     while True:
         print("1. Start Game")
         print("2. Game Instructions")
@@ -53,20 +45,10 @@ def main_menu():
         elif choice == "3":
             show_hall_of_fame()
         elif choice == "4":
-            print(r""" ____  _  _  ____    ____  _  _  ____                          
-(  _ \( \/ )( ___)  (  _ \( \/ )( ___)                         
- ) _ < \  /  )__)    ) _ < \  /  )__)                          
-(____/ (__) (____)  (____/ (__) (____)                         
- ____  _   _    __    _  _  _  _    _  _  _____  __  __        
-(_  _)( )_( )  /__\  ( \( )( )/ )  ( \/ )(  _  )(  )(  )       
-  )(   ) _ (  /(__)\  )  (  )  (    \  /  )(_)(  )(__)(        
- (__) (_) (_)(__)(__)(_)\_)(_)\_)   (__) (_____)(______)       
- ____  _____  ____    ____  __      __   _  _  ____  _  _  ___ 
-( ___)(  _  )(  _ \  (  _ \(  )    /__\ ( \/ )(_  _)( \( )/ __)
- )__)  )(_)(  )   /   )___/ )(__  /(__)\ \  /  _)(_  )  (( (_-.
-(__)  (_____)(_)\_)  (__)  (____)(__)(__)(__) (____)(_)\_)\___/
-"""
+            result = pyfiglet.figlet_format(
+                "ByeBye, thank you for playing!", font="bulbhead"
             )
+            print(result)
             break
         else:
             print("Invalid input. Please select one of the available options\n")
@@ -344,18 +326,8 @@ def check_win(board, piece):
 
 
 def show_game_instructions():
-    print(
-        r"""
-  ___    __    __  __  ____                                             
- / __)  /__\  (  \/  )( ___)                                            
-( (_-. /(__)\  )    (  )__)                                             
- \___/(__)(__)(_/\/\_)(____)                                            
- ____  _  _  ___  ____  ____  __  __  ___  ____  ____  _____  _  _  ___ 
-(_  _)( \( )/ __)(_  _)(  _ \(  )(  )/ __)(_  _)(_  _)(  _  )( \( )/ __)
- _)(_  )  ( \__ \  )(   )   / )(__)(( (__   )(   _)(_  )(_)(  )  ( \__ \
-(____)(_)\_)(___/ (__) (_)\_)(______)\___) (__) (____)(_____)(_)\_)(___/ 
- """
-    )
+    result = pyfiglet.figlet_format("Game Instructions", font="bulbhead")
+    print(result)
     print("Connect Four is a two-player connection game in which")
     print("the players take turns dropping discs from the top into")
     print("a seven-column, six-row vertically suspended grid.\n")
@@ -370,14 +342,8 @@ def show_game_instructions():
 
 
 def show_hall_of_fame():
-    print(
-        r"""
- _   _    __    __    __      _____  ____    ____  __    __  __  ____ 
-( )_( )  /__\  (  )  (  )    (  _  )( ___)  ( ___)/__\  (  \/  )( ___)
- ) _ (  /(__)\  )(__  )(__    )(_)(  )__)    )__)/(__)\  )    (  )__) 
-(_) (_)(__)(__)(____)(____)  (_____)(__)    (__)(__)(__)(_/\/\_)(____)
-"""
-    )
+    result = pyfiglet.figlet_format("Hall of Fame", font="bulbhead")
+    print(result)
     print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
     print("-" * 40)
 
@@ -389,5 +355,7 @@ def show_hall_of_fame():
 
     input("\nPress Enter to return to Main Menu!\n")
 
+
+# Main menu
 
 main_menu()
