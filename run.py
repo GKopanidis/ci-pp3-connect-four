@@ -5,6 +5,7 @@ from google.oauth2.service_account import Credentials
 import random
 import pyfiglet
 from colorama import just_fix_windows_console
+
 just_fix_windows_console()
 from colorama import Fore, Back, Style
 
@@ -56,7 +57,9 @@ def main_menu():
             print(Style.RESET_ALL)
             break
         else:
-            print(Fore.RED + "Invalid input. Please select one of the available options\n")
+            print(
+                Fore.RED + "Invalid input. Please select one of the available options\n"
+            )
             print(Style.RESET_ALL)
 
 
@@ -70,10 +73,13 @@ def start_game():
     while True:
         player_name = input("Please enter your name (min. 3 characters): \n")
         print()
-        if len(player_name) >= 3:
+        if len(player_name) >= 3 and any(char.isalpha() for char in player_name):
             break
         elif len(player_name) > 0:
-            print(Fore.RED + "Error: Name must be at least 3 characters long.\n")
+            print(
+                Fore.RED
+                + "Error: Name must be at least 3 characters long and contain at least one letter.\n"
+            )
             print(Style.RESET_ALL)
         else:
             print(Fore.RED + "Error: Name cannot be empty.\n")
@@ -122,7 +128,10 @@ def start_game():
                         print_board(board)
 
                         if check_win(board, Fore.GREEN + "P" + Style.RESET_ALL):
-                            print(Fore.GREEN + f"Congratulations, {player_name}! You won!\n")
+                            print(
+                                Fore.GREEN
+                                + f"Congratulations, {player_name}! You won!\n"
+                            )
                             print(Style.RESET_ALL)
                             update_player_record(player_index, True)
                             game_over = True
@@ -137,7 +146,12 @@ def start_game():
 
                             if is_valid_location(board, computer_col):
                                 computer_row = get_next_open_row(board, computer_col)
-                                place_piece(board, computer_row, computer_col, Fore.RED + "C" + Style.RESET_ALL)
+                                place_piece(
+                                    board,
+                                    computer_row,
+                                    computer_col,
+                                    Fore.RED + "C" + Style.RESET_ALL,
+                                )
                                 print_board(board)
                                 print(Style.RESET_ALL)
 
@@ -148,22 +162,29 @@ def start_game():
                                     game_over = True
                             else:
                                 print()
-                                print(Fore.RED + 
-                                    "Invalid move by computer. Skipping computer's turn.\n"
+                                print(
+                                    Fore.RED
+                                    + "Invalid move by computer. Skipping computer's turn.\n"
                                 )
                                 print(Style.RESET_ALL)
                     else:
                         print()
-                        print(Fore.RED + "Invalid move. Please choose a valid column.\n")
+                        print(
+                            Fore.RED + "Invalid move. Please choose a valid column.\n"
+                        )
                         print(Style.RESET_ALL)
                 else:
                     print()
-                    print(Fore.RED + "Column number out of range. Please choose a number between 1 and 7.\n")
+                    print(
+                        Fore.RED
+                        + "Column number out of range. Please choose a number between 1 and 7.\n"
+                    )
                     print(Style.RESET_ALL)
             except ValueError:
                 print()
-                print(Fore.RED + 
-                    "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
+                print(
+                    Fore.RED
+                    + "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
                 )
                 print(Style.RESET_ALL)
 
@@ -185,12 +206,24 @@ def find_player(player_name):
     """
     Find a player in the hof sheet by name
     """
-    player_data = HOF_SHEET.get_all_records()
-    for index, player in enumerate(player_data):
-        if player["player_name"] == player_name:
-            return player, index + 2
-    new_index = add_new_player(player_name)
-    return None, new_index
+    #  Check if the player name contains at least one letter and has more than 2 characters
+    if any(char.isalpha() for char in player_name) and len(player_name) > 2:
+        player_data = HOF_SHEET.get_all_records()
+        for index, player in enumerate(player_data):
+            if player["player_name"] == player_name:
+                return player, index + 2
+    else:
+        print(
+            Fore.RED
+            + "Error: Name must contain at least one letter and be at least 3 characters long.\n"
+        )
+        print(Style.RESET_ALL)
+        return None, -1
+
+    # Add a new player only if the name contains at least one letter and has more than 2 characters
+    if any(char.isalpha() for char in player_name) and len(player_name) > 2:
+        new_index = add_new_player(player_name)
+        return None, new_index
 
 
 # Add player if not found in sheet
