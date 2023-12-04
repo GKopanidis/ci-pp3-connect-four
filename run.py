@@ -146,16 +146,20 @@ def start_game():
                                     update_player_record(player_index, False)
                                     game_over = True
                             else:
+                                print("")
                                 print(
                                     "Invalid move by computer. Skipping computer's turn.\n"
                                 )
                     else:
+                        print("")
                         print("Invalid move. Please choose a valid column.\n")
                 else:
+                    print("")
                     print(
                         "Column number out of range. Please choose a number between 1 and 7.\n"
                     )
             except ValueError:
+                print("")
                 print(
                     "Invalid input. Please enter a valid number between 1 and 7 or press Enter to quit.\n"
                 )
