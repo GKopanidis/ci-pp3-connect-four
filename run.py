@@ -105,10 +105,10 @@ def start_game():
 
         while not game_over:
             col_input = input(
-                "Choose a column to place your piece (1-7), or press Enter to quit: \n"
+                "Choose a column to place your piece (1-7), or press 'Q' to quit: \n"
             )
 
-            if not col_input:
+            if col_input.lower() == "q" or col_input.lower() == "Q":
                 confirm_quit = input("Are you sure you want to quit? (y/n): \n").lower()
                 print()
                 if confirm_quit == "y":
