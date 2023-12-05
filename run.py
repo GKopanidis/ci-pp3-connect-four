@@ -8,6 +8,7 @@ from colorama import just_fix_windows_console
 
 just_fix_windows_console()
 from colorama import Fore, Back, Style
+import os
 
 # Global variable
 
@@ -28,9 +29,37 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("connect_four")
 HOF_SHEET = SHEET.worksheet("hof")
 
+#Clear screen
+
+def clear_screen():
+    """
+    Clear Screen
+    """
+    # For Windows
+    if os.name == 'nt':
+        os.system('cls')
+    # For Mac and Linux
+    else:
+        os.system('clear')
+
+#Prepare game
+
+def prepare_game(player_name, vs_computer, player2_name=""):
+    """
+    Prepare game and show welcome message
+    """
+    clear_screen()
+    existing_player, player1_index = find_player(player_name)
+    greet_player(existing_player, player_name)
+
+    if not vs_computer:
+        existing_player2, player2_index = find_player(player2_name)
+        greet_player(existing_player2, player2_name)
+    input("Press any key to start the game...")
+    clear_screen()
+
 
 # Get valid player
-
 
 def get_valid_player_name(prompt="Enter your name"):
     while True:
@@ -174,9 +203,7 @@ def check_for_blocking_move(board, player_piece):
         else Fore.RED + "C" + Style.RESET_ALL
     )
 
-    print("Debugging: Überprüfe vertikale Bedrohungen")
-
-    # Horizontal
+# Horizontal
     for row in range(6):
         for col in range(4):
             if (
@@ -256,6 +283,7 @@ def print_board(board):
     """
     Prints the game board in a readable format
     """
+    clear_screen()
     print(" 1 2 3 4 5 6 7")
     print("---------------")
     for row in board:
@@ -353,6 +381,10 @@ def check_win(board, piece):
 
 
 def show_game_instructions():
+    """
+    Show the game instructions
+    """
+    clear_screen()
     result = pyfiglet.figlet_format("Game Instructions", font="bulbhead")
     print(Fore.YELLOW + result)
     print(Style.RESET_ALL)
@@ -395,6 +427,10 @@ def show_game_instructions():
 
 
 def show_hall_of_fame():
+    """
+    Show the hall of fame
+    """
+    clear_screen()
     result = pyfiglet.figlet_format("Hall of Fame", font="bulbhead")
     print(Fore.YELLOW + result)
     print(Style.RESET_ALL)
@@ -421,6 +457,7 @@ def main_menu():
         """
         Show welcome message and menu
         """
+        clear_screen()
         result = pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
         print(Fore.YELLOW + result)
         print(Style.RESET_ALL)
@@ -431,7 +468,7 @@ def main_menu():
         print("4. Hall of Fame")
         print("5. Quit\n")
 
-        choice = input("Please choose an option (1/2/3/4):\n")
+        choice = input("Please choose an option (1/2/3/4/5):\n")
         print()
 
         if choice == "1":
@@ -455,14 +492,14 @@ def main_menu():
 
 
 def start_game(player_name, vs_computer=True, player2_name=""):
-    print()
-
+    """
+    Start Game
+    """
+    prepare_game(player_name, vs_computer, player2_name)
     existing_player, player1_index = find_player(player_name)
-    greet_player(existing_player, player_name)
-
+    player2_index = None
     if not vs_computer:
-        existing_player2, player2_index = find_player(player2_name)
-        greet_player(existing_player2, player2_name)
+        _, player2_index = find_player(player2_name)
 
     board = create_board()
     print_board(board)
@@ -480,7 +517,6 @@ def start_game(player_name, vs_computer=True, player2_name=""):
                 print_board(board)
                 if check_win(board, Fore.GREEN + "P" + Style.RESET_ALL):
                     print(f"Congratulations, {player_name}! You won!\n")
-                    update_player_record(player1_index, True)
                     game_over = True
                 else:
                     turn = 1
@@ -494,24 +530,12 @@ def start_game(player_name, vs_computer=True, player2_name=""):
                     return
             if is_valid_location(board, col):
                 row = get_next_open_row(board, col)
-                piece = (
-                    Fore.RED + "C" + Style.RESET_ALL
-                    if vs_computer
-                    else Fore.YELLOW + "O" + Style.RESET_ALL
-                )
+                piece = Fore.RED + "C" + Style.RESET_ALL if vs_computer else Fore.YELLOW + "O" + Style.RESET_ALL
                 place_piece(board, row, col, piece)
                 print_board(board)
                 if check_win(board, piece):
-                    winner = (
-                        player_name
-                        if turn == 0
-                        else (player2_name if not vs_computer else "Computer")
-                    )
+                    winner = player_name if turn == 0 else (player2_name if not vs_computer else "Computer")
                     print(f"Congratulations, {winner}! You won!\n")
-                    if vs_computer:
-                        update_player_record(player1_index, False)
-                    else:
-                        update_player_record(player2_index, True)
                     game_over = True
                 else:
                     turn = 0
@@ -520,24 +544,26 @@ def start_game(player_name, vs_computer=True, player2_name=""):
             print(Fore.YELLOW + "It's a tie!")
             print(Style.RESET_ALL)
             game_over = True
-
+        
         if game_over:
+            if player1_index is not None:
+                update_player_record(player1_index, True if turn == 0 else False)
+            if player2_index is not None and not vs_computer and player2_index != player1_index:
+                update_player_record(player2_index, True if turn == 1 else False)
+            
             while True:
                 play_again = input("Do you want to play again? (y/n):\n").lower()
                 if play_again == "y":
-                    print(Fore.BLUE + "Starting a new game.")
-                    print(Style.RESET_ALL)
-                    return start_game(player_name, vs_computer, player2_name)
+                    prepare_game(player_name, vs_computer, player2_name)
+                    board = create_board()
+                    print_board(board)
+                    game_over = False
+                    turn = 0
+                    break
                 elif play_again == "n":
-                    print(Fore.BLUE + "Returning to Main Menu.")
-                    print(Style.RESET_ALL)
-                    return
+                    break
                 else:
-                    print(
-                        Fore.RED
-                        + "Invalid input. Please enter 'y' for yes or 'n' for no.\n"
-                        + Style.RESET_ALL
-                    )
+                    print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n" + Style.RESET_ALL)
 
 
 # Run game
