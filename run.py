@@ -29,20 +29,23 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("connect_four")
 HOF_SHEET = SHEET.worksheet("hof")
 
-#Clear screen
+# Clear screen
+
 
 def clear_screen():
     """
     Clear Screen
     """
     # For Windows
-    if os.name == 'nt':
-        os.system('cls')
+    if os.name == "nt":
+        os.system("cls")
     # For Mac and Linux
     else:
-        os.system('clear')
+        os.system("clear")
 
-#Prepare game
+
+# Prepare game
+
 
 def prepare_game(player_name, vs_computer, player2_name=""):
     """
@@ -60,6 +63,7 @@ def prepare_game(player_name, vs_computer, player2_name=""):
 
 
 # Get valid player
+
 
 def get_valid_player_name(prompt="Enter your name"):
     while True:
@@ -81,26 +85,29 @@ def get_valid_player_name(prompt="Enter your name"):
 
 def find_player(player_name):
     """
-    Find a player in the hof sheet by name
+    Find a player in the hof sheet by name using a more efficient method.
     """
-    #  Check if the player name contains at least one letter and has more than 2 characters
-    if any(char.isalpha() for char in player_name) and len(player_name) > 2:
-        player_data = HOF_SHEET.get_all_records()
-        for index, player in enumerate(player_data):
-            if player["player_name"] == player_name:
-                return player, index + 2
-    else:
-        print(
-            Fore.RED
-            + "Error: Name must contain at least one letter and be at least 3 characters long.\n"
-        )
-        print(Style.RESET_ALL)
-        return None, -1
+    try:
+        cell = HOF_SHEET.find(player_name)
+        if cell:
+            player_data = HOF_SHEET.row_values(cell.row)
+            player = {
+                "player_name": player_data[0],
+                "games_won": int(player_data[1]),
+                "games_lost": int(player_data[2])
+            }
+            return player, cell.row
+        else:
+            raise ValueError("Player not found")
 
-    # Add a new player only if the name contains at least one letter and has more than 2 characters
-    if any(char.isalpha() for char in player_name) and len(player_name) > 2:
-        new_index = add_new_player(player_name)
-        return None, new_index
+    except (gspread.exceptions.GSpreadException, ValueError):
+        # Add a new player if not found
+        if any(char.isalpha() for char in player_name) and len(player_name) > 2:
+            new_index = add_new_player(player_name)
+            return None, new_index
+        else:
+            print(Fore.RED + "Invalid player name." + Style.RESET_ALL)
+            return None, -1
 
 
 # Add player if not found in sheet
@@ -121,6 +128,7 @@ def add_new_player(player_name):
 
 
 # Greet players
+
 
 def greet_player(existing_player, player_name):
     if existing_player:
@@ -203,7 +211,7 @@ def check_for_blocking_move(board, player_piece):
         else Fore.RED + "C" + Style.RESET_ALL
     )
 
-# Horizontal
+    # Horizontal
     for row in range(6):
         for col in range(4):
             if (
@@ -530,11 +538,19 @@ def start_game(player_name, vs_computer=True, player2_name=""):
                     return
             if is_valid_location(board, col):
                 row = get_next_open_row(board, col)
-                piece = Fore.RED + "C" + Style.RESET_ALL if vs_computer else Fore.YELLOW + "O" + Style.RESET_ALL
+                piece = (
+                    Fore.RED + "C" + Style.RESET_ALL
+                    if vs_computer
+                    else Fore.YELLOW + "O" + Style.RESET_ALL
+                )
                 place_piece(board, row, col, piece)
                 print_board(board)
                 if check_win(board, piece):
-                    winner = player_name if turn == 0 else (player2_name if not vs_computer else "Computer")
+                    winner = (
+                        player_name
+                        if turn == 0
+                        else (player2_name if not vs_computer else "Computer")
+                    )
                     print(f"Congratulations, {winner}! You won!\n")
                     game_over = True
                 else:
@@ -544,13 +560,17 @@ def start_game(player_name, vs_computer=True, player2_name=""):
             print(Fore.YELLOW + "It's a tie!")
             print(Style.RESET_ALL)
             game_over = True
-        
+
         if game_over:
             if player1_index is not None:
                 update_player_record(player1_index, True if turn == 0 else False)
-            if player2_index is not None and not vs_computer and player2_index != player1_index:
+            if (
+                player2_index is not None
+                and not vs_computer
+                and player2_index != player1_index
+            ):
                 update_player_record(player2_index, True if turn == 1 else False)
-            
+
             while True:
                 play_again = input("Do you want to play again? (y/n):\n").lower()
                 if play_again == "y":
@@ -563,7 +583,11 @@ def start_game(player_name, vs_computer=True, player2_name=""):
                 elif play_again == "n":
                     break
                 else:
-                    print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n" + Style.RESET_ALL)
+                    print(
+                        Fore.RED
+                        + "Invalid input. Please enter 'y' or 'n'.\n"
+                        + Style.RESET_ALL
+                    )
 
 
 # Run game
