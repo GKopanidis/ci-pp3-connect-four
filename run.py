@@ -44,17 +44,19 @@ def main_menu():
         print()
 
         if choice == "1":
-            player_name = input(
-                "Please enter your name (min. 3 characters with at least 1 letter): \n"
-            )
-            if len(player_name) >= 3 and any(char.isalpha() for char in player_name):
-                start_game(player_name)
-            else:
-                print(
-                    Fore.RED
-                    + "Invalid name. Please enter at least 3 characters with at least 1 letter.\n"
+            while True:
+                player_name = input(
+                    "Please enter your name (min. 3 characters with at least 1 letter): \n"
                 )
-                print(Style.RESET_ALL)
+                if len(player_name) >= 3 and any(char.isalpha() for char in player_name):
+                    start_game(player_name)
+                    break
+                else:
+                    print(
+                        Fore.RED
+                        + "Invalid name. Please enter at least 3 characters with at least 1 letter.\n"
+                    )
+                    print(Style.RESET_ALL)
         elif choice == "2":
             show_game_instructions()
         elif choice == "3":
@@ -180,16 +182,20 @@ def start_game(player_name):
                 print(Style.RESET_ALL)
 
             if game_over or quit_game:
-                play_again = input("Do you want to play again? (y/n):\n").lower()
-                print()
-                if play_again == "y":
-                    print(Fore.BLUE + "Starting a new game.")
-                    print(Style.RESET_ALL)
-                    return start_game(player_name)
-                else:
-                    print(Fore.BLUE + "Returning to Main Menu.")
-                    print(Style.RESET_ALL)
-                    return
+                while True:
+                    play_again = input("Do you want to play again? (y/n):\n").lower()
+                    print()
+                    if play_again == "y":
+                        print(Fore.BLUE + "Starting a new game.")
+                        print(Style.RESET_ALL)
+                        return start_game(player_name)
+                    elif play_again == "n":
+                        print(Fore.BLUE + "Returning to Main Menu.")
+                        print(Style.RESET_ALL)
+                        return
+                    else:
+                        print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n")
+                        print(Style.RESET_ALL)
 
     return
 
