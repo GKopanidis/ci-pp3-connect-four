@@ -203,61 +203,19 @@ def get_player_move(player_name):
 
 def check_for_blocking_move(board, player_piece):
     """
-    Checks if a move by the player can be blocked
+    Checks if a move by the player can be blocked by the computer.
     """
-    opponent_piece = (
-        Fore.GREEN + "P" + Style.RESET_ALL
-        if player_piece == Fore.RED + "C" + Style.RESET_ALL
-        else Fore.RED + "C" + Style.RESET_ALL
-    )
+    opponent_piece = Fore.GREEN + "P" + Style.RESET_ALL if player_piece == Fore.RED + "C" + Style.RESET_ALL else Fore.RED + "C" + Style.RESET_ALL
 
-    # Horizontal
-    for row in range(6):
-        for col in range(4):
-            if (
-                board[row][col] == player_piece
-                and board[row][col + 1] == player_piece
-                and board[row][col + 2] == player_piece
-                and board[row][col + 3] == " "
-                and (row == 5 or board[row + 1][col + 3] != " ")
-            ):
-                return col + 3
-
-    # Vertical
-    for col in range(7):
-        for row in range(3):
-            if (
-                board[row][col] == opponent_piece
-                and board[row + 1][col] == opponent_piece
-                and board[row + 2][col] == opponent_piece
-                and board[row + 3][col] == " "
-            ):
-                print(f"Blocking vertical move at column {col}")
-                return col
-
-    # Diagonal (from top left to bottom right)
-    for row in range(3):
-        for col in range(4):
-            if (
-                board[row][col] == opponent_piece
-                and board[row + 1][col + 1] == opponent_piece
-                and board[row + 2][col + 2] == opponent_piece
-                and board[row + 3][col + 3] == " "
-            ):
-                print(f"Blocking diagonal (left to right) move at column {col + 3}")
-                return col + 3
-
-    # Diagonal (from top right to bottom left)
-    for row in range(3):
-        for col in range(3, 7):
-            if (
-                board[row][col] == opponent_piece
-                and board[row + 1][col - 1] == opponent_piece
-                and board[row + 2][col - 2] == opponent_piece
-                and board[row + 3][col - 3] == " "
-            ):
-                print(f"Blocking diagonal (right to left) move at column {col - 3}")
-                return col - 3
+    for c in range(7):
+        for r in range(6):
+            if board[r][c] == " " and is_valid_location(board, c):
+                # Temporarily simulate an opponent's move
+                board[r][c] = opponent_piece
+                if check_win(board, opponent_piece):
+                    board[r][c] = " "  # Undo the move
+                    return c  # Return the blocking column
+                board[r][c] = " "  # Undo the move if it does not result in a win
 
     return None
 
