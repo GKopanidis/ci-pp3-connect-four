@@ -102,17 +102,18 @@ def get_valid_player_name(prompt="Enter your name"):
         str: A validated player name that meets the criteria.
     """
     while True:
-        player_name = input(
-            f"{prompt} (min. 3 characters with at least 1 letter): \n"
-        ).strip()
-        if len(player_name) >= 3 and any(char.isalpha() for char in player_name):
+        player_name = input(f"{prompt} (3-20 characters, letters, numbers, "
+                            "and spaces only; at least one letter required): \n").strip()
+
+        is_length_valid = 3 <= len(player_name) <= 20
+        has_at_least_one_letter = any(char.isalpha() for char in player_name)
+        has_valid_characters = all(char.isalpha() or char.isdigit() or char.isspace() for char in player_name)
+
+        if is_length_valid and has_at_least_one_letter and has_valid_characters:
             return player_name
         else:
-            print(
-                Fore.RED
-                + "Invalid name. Please enter at least 3 characters with at least 1 letter.\n"
-                + Style.RESET_ALL
-            )
+            print(Fore.RED + "Invalid name. Please enter 3-20 characters "
+                  "(letters, numbers, and spaces only; at least one letter required).\n" + Style.RESET_ALL)
 
 
 # Find player
