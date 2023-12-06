@@ -614,42 +614,34 @@ def show_game_instructions():
         and 'clear_screen' to clear the console before displaying the instructions.
     """
     clear_screen()
-    result = pyfiglet.figlet_format("Game Instructions", font="bulbhead")
-    print(Fore.YELLOW + result)
-    print(Style.RESET_ALL)
-    print("-" * 60)
-    print("\nConnect Four is a two-player connection game where players")
-    print("take turns dropping discs from the top into a seven-column, ")
-    print("six-row vertically suspended grid.\n")
-    print("In the two-player mode, one player is represented by the")
     print(
-        ("symbol ")
-        + Fore.GREEN
-        + "P"
+        Fore.YELLOW
+        + pyfiglet.figlet_format("Game Instructions", font="bulbhead")
         + Style.RESET_ALL
-        + (" and the other player by the symbol ")
-        + Fore.YELLOW
-        + "O"
-        + Style.RESET_ALL
-        + ".\n"
     )
-    print(
-        ("In the single-player mode, player is displayed as ")
-        + Fore.GREEN
-        + "P"
-        + Style.RESET_ALL
-        + " on the"
-    )
-    print("game board when they place a piece and the computer is")
-    print(("represented by a ") + Fore.RED + "C" + Style.RESET_ALL + ".\n")
-    print("Each player alternates turns, dropping one of their discs")
-    print("into the grid each turn.\n")
-    print("The goal of the game is to connect four discs vertically,")
-    print("horizontally, or diagonally before your opponent.\n")
-    print("-" * 60)
+    print("-" * 67)
+    game_description = f"""
+    Connect Four is a two-player connection game where players
+    take turns dropping discs from the top into a seven-column, 
+    six-row vertically suspended grid.
+
+    In the two-player mode, one player is represented by the
+    symbol {Fore.GREEN}P{Style.RESET_ALL} and the other player by the symbol {Fore.YELLOW}O{Style.RESET_ALL}.
+
+    In the single-player mode, player is displayed as {Fore.GREEN}P{Style.RESET_ALL} on the
+    game board when they place a piece and the computer is
+    represented by a {Fore.RED}C{Style.RESET_ALL}.
+
+    Each player alternates turns, dropping one of their discs
+    into the grid each turn.
+
+    The goal of the game is to connect four discs vertically,
+    horizontally, or diagonally before your opponent.
+    """
+    print(game_description)
+    print("-" * 67)
     print()
-    input(Fore.BLUE + "Press Enter to return to Main Menu!\n")
-    print(Style.RESET_ALL)
+    input(Fore.BLUE + "Press Enter to return to Main Menu!\n" + Style.RESET_ALL)
 
 
 # Hall of Fame
@@ -670,9 +662,11 @@ def show_hall_of_fame():
         player data.
     """
     clear_screen()
-    result = pyfiglet.figlet_format("Hall of Fame", font="bulbhead")
-    print(Fore.YELLOW + result)
-    print(Style.RESET_ALL)
+    print(
+        Fore.YELLOW
+        + pyfiglet.figlet_format("Game Instructions", font="bulbhead")
+        + Style.RESET_ALL
+    )
     print(f"{'Player':<20}{'Wins':<10}{'Losses':<10}")
     print("-" * 40)
 
@@ -710,9 +704,11 @@ def main_menu():
         Show welcome message and menu
         """
         clear_screen()
-        result = pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
-        print(Fore.YELLOW + result)
-        print(Style.RESET_ALL)
+        print(
+            Fore.YELLOW
+            + pyfiglet.figlet_format("Welcome to Connect Four", font="bulbhead")
+            + Style.RESET_ALL
+        )
 
         print("1. Start Game against Computer")
         print("2. Start Game against another Player")
@@ -736,11 +732,13 @@ def main_menu():
             show_hall_of_fame()
         elif choice == "5":
             clear_screen()
-            result = pyfiglet.figlet_format(
-                "ByeBye, thank you for playing!", font="bulbhead"
+            print(
+                Fore.YELLOW
+                + pyfiglet.figlet_format(
+                    "ByeBye, thank you for playing!", font="bulbhead"
+                )
+                + Style.RESET_ALL
             )
-            print(Fore.YELLOW + result)
-            print(Style.RESET_ALL)
             is_running = False
             return
 
