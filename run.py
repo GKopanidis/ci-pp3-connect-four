@@ -2,6 +2,7 @@
 
 import gspread
 from google.oauth2.service_account import Credentials
+from gspread.exceptions import SpreadsheetNotFound, APIError, WorksheetNotFound
 import random
 import pyfiglet
 from colorama import just_fix_windows_console
@@ -147,17 +148,38 @@ def find_player(player_name):
                 "games_lost": int(player_data[2])
             }
             return player, cell.row
-        else:
-            raise ValueError("Player not found")
 
-    except (gspread.exceptions.GSpreadException, ValueError):
-        # Add a new player if not found
+        # Handling when the player is not found
         if any(char.isalpha() for char in player_name) and len(player_name) > 2:
             new_index = add_new_player(player_name)
             return None, new_index
         else:
             print(Fore.RED + "Invalid player name." + Style.RESET_ALL)
             return None, -1
+
+    except WorksheetNotFound:
+        # Specific handling for when a worksheet is not found
+        print(Fore.RED + "Error: The specified worksheet was not found in the spreadsheet." + Style.RESET_ALL)
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+    except SpreadsheetNotFound:
+        # Specific handling for when the spreadsheet is not found
+        print(Fore.RED + "Error: The specified spreadsheet was not found." + Style.RESET_ALL)
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+    except APIError as e:
+        # Handling other API errors
+        print(Fore.RED + f"An API error occurred: {e.message}" + Style.RESET_ALL)
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+    except Exception as e:
+        # Generic exception handler for any other unforeseen exceptions
+        print(Fore.RED + f"An unexpected error occurred: {e}" + Style.RESET_ALL)
+        # Log the error and/or take other appropriate actions
+        return None, -1
 
 
 # Add player if not found in sheet
@@ -690,7 +712,10 @@ def main_menu():
         elif choice == "4":
             show_hall_of_fame()
         elif choice == "5":
-            print(Fore.YELLOW + "ByeBye, thank you for playing!" + Style.RESET_ALL)
+            clear_screen()
+            result = pyfiglet.figlet_format("ByeBye, thank you for playing!", font="bulbhead")
+            print(Fore.YELLOW + result)
+            print(Style.RESET_ALL)
             is_running = False
             return
 
