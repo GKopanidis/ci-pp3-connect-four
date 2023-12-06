@@ -297,9 +297,7 @@ def get_player_move(player_name):
         'colorama' module for text coloring. The returned column number is zero-indexed.
     """
     while True:
-        col_input = input(
-            f"{player_name}, choose a column to place your piece (1-7), or press 'Q' to quit: \n"
-        )
+        col_input = input(f"{player_name}, choose a column to place your piece (1-7), or press 'Q' to quit: \n")
 
         if col_input.lower() == "q":
             confirm_quit = input("Are you sure you want to quit? (y/n): \n").lower()
@@ -309,24 +307,15 @@ def get_player_move(player_name):
             elif confirm_quit == "n":
                 continue
             else:
-                print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n")
-                print(Style.RESET_ALL)
+                print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n" + Style.RESET_ALL)
         elif col_input.isdigit():
             col = int(col_input) - 1
             if 0 <= col < 7:
                 return col
             else:
-                print(
-                    Fore.RED
-                    + "Column number out of range. Please choose a number between 1 and 7.\n"
-                )
-                print(Style.RESET_ALL)
+                print(Fore.RED + "Column number out of range. Please choose a number between 1 and 7.\n" + Style.RESET_ALL)
         else:
-            print(
-                Fore.RED
-                + "Invalid input. Please enter a valid number between 1 and 7 or 'Q' to quit.\n"
-            )
-            print(Style.RESET_ALL)
+            print(Fore.RED + "Invalid input. Please enter a valid number between 1 and 7 or 'Q' to quit.\n" + Style.RESET_ALL)
 
 
 # Check blocking move
