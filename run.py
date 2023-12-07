@@ -435,8 +435,8 @@ def get_player_move(player_name, board):
     """
     while True:
         col_input = input(
-            f"{player_name}, choose a column to place your piece (1-7) "
-            f"(1-7), or press 'Q' to quit: \n"
+            f"{player_name}, choose a column to place your piece (1-7), "
+            f"or press 'Q' to quit: \n"
         )
 
         if col_input.lower() == "q":
