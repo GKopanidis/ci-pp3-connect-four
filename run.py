@@ -51,37 +51,308 @@ def clear_screen():
         os.system("clear")
 
 
+# Class board
+
+
+class Board:
+    """
+    Represents the game board for Connect Four.
+
+    Attributes:
+        rows (int): Number of rows in the game board.
+        cols (int): Number of columns in the game board.
+        grid (list of lists): A 2D list representing the game board, where each cell can be empty or contain a player's piece.
+    """
+
+    def __init__(self, rows=6, cols=7):
+        """
+        Initializes a new game board with the specified number of rows and columns.
+
+        Args:
+            rows (int): Number of rows in the game board, defaults to 6.
+            cols (int): Number of columns in the game board, defaults to 7.
+        """
+        self.rows = rows
+        self.cols = cols
+        self.grid = [[" " for _ in range(cols)] for _ in range(rows)]
+
+    def add_piece(self, row, col, piece):
+        """
+        Adds a piece to the specified location on the board.
+
+        Args:
+            row (int): The row index to place the piece.
+            col (int): The column index to place the piece.
+            piece (str): The symbol representing the player's piece.
+        """
+        self.grid[row][col] = piece
+
+    def is_valid_location(self, col):
+        """
+        Checks if a column can accept a new piece.
+
+        Args:
+            col (int): The column index to check.
+
+        Returns:
+            bool: True if the top cell of the column is empty, False otherwise.
+        """
+        return self.grid[0][col] == " "
+
+    def get_next_open_row(self, col):
+        """
+        Finds the next open row in the given column.
+
+        Args:
+            col (int): The column index to check.
+
+        Returns:
+            int: The row index of the next open cell in the specified column, or None if the column is full.
+        """
+        for r in range(self.rows - 1, -1, -1):
+            if self.grid[r][col] == " ":
+                return r
+        return None
+
+    def print_board(self):
+        """
+        Displays the game board in a readable format.
+
+        Returns:
+            None
+        """
+        clear_screen()
+        print(" 1 2 3 4 5 6 7")
+        print("---------------")
+        for row in self.grid:
+            print("|" + "|".join(row) + "|")
+        print("---------------\n")
+        pass
+
+    def check_win(self, piece):
+        """
+        Checks if the current board has a winning condition for the specified piece.
+
+        Args:
+            piece (str): The symbol representing the player's piece to check for a win.
+
+        Returns:
+            bool: True if there is a sequence of four same pieces in a row, column, or diagonal; False otherwise.
+        """
+        for row in range(6):
+            for col in range(4):
+                if (
+                    self.grid[row][col] == piece
+                    and self.grid[row][col + 1] == piece
+                    and self.grid[row][col + 2] == piece
+                    and self.grid[row][col + 3] == piece
+                ):
+                    return True
+
+        for row in range(3):
+            for col in range(7):
+                if (
+                    self.grid[row][col] == piece
+                    and self.grid[row + 1][col] == piece
+                    and self.grid[row + 2][col] == piece
+                    and self.grid[row + 3][col] == piece
+                ):
+                    return True
+
+        for row in range(3):
+            for col in range(4):
+                if (
+                    self.grid[row][col] == piece
+                    and self.grid[row + 1][col + 1] == piece
+                    and self.grid[row + 2][col + 2] == piece
+                    and self.grid[row + 3][col + 3] == piece
+                ):
+                    return True
+
+        for row in range(3):
+            for col in range(3, 7):
+                if (
+                    self.grid[row][col] == piece
+                    and self.grid[row + 1][col - 1] == piece
+                    and self.grid[row + 2][col - 2] == piece
+                    and self.grid[row + 3][col - 3] == piece
+                ):
+                    return True
+
+        return False
+        pass
+
+
+# Class Player
+
+
+class Player:
+    """
+    Represents a player in the Connect Four game.
+
+    Attributes:
+        name (str): The name of the player.
+        games_won (int): The number of games won by the player.
+        games_lost (int): The number of games lost by the player.
+    """
+
+    def __init__(self, name):
+        """
+        Initializes a new Player instance.
+
+        Args:
+            name (str): The name of the player.
+        """
+        self.name = name
+        self.games_won = 0
+        self.games_lost = 0
+
+    def record_win(self):
+        """
+        Records a win for the player by incrementing their win count.
+        """
+        self.games_won += 1
+
+    def record_loss(self):
+        """
+        Records a loss for the player by incrementing their loss count.
+        """
+        self.games_lost += 1
+
+    def greet(self):
+        """
+        Greets the player with a welcome message including their current game statistics.
+
+        Displays a customized greeting based on the player's game history, showing the number of games won and lost.
+        """
+        if self.games_won > 0 or self.games_lost > 0:
+            print(Fore.CYAN + f"Welcome back, {self.name}!")
+            print(Fore.GREEN + f"Won Games: {self.games_won}")
+            print(Fore.RED + f"Lost Games: {self.games_lost}\n")
+        else:
+            print(Fore.CYAN + f"Welcome, {self.name}! Good luck on your first game!\n")
+        print(Style.RESET_ALL)
+
+
+# Find player in HOF sheet
+
+
+def find_player(player_name: str):
+    """
+    Searches for a player in the Hall of Fame spreadsheet.
+
+    Args:
+        player_name (str): The name of the player to search for.
+    """
+    try:
+        cell = HOF_SHEET.find(player_name)
+        if cell:
+            player_data = HOF_SHEET.row_values(cell.row)
+            player = Player(player_name)
+            player.games_won = int(player_data[1])
+            player.games_lost = int(player_data[2])
+            player.index = cell.row
+            return player
+
+        else:
+            if any(char.isalpha() for char in player_name) and len(player_name) > 2:
+                new_index = add_new_player(player_name)
+                return None, new_index
+            else:
+                print(Fore.RED + "Invalid player name." + Style.RESET_ALL)
+                return None, -1
+
+    except WorksheetNotFound:
+        # Specific handling for when a worksheet is not found
+        print(
+            Fore.RED
+            + "Error: The specified worksheet was not found in the spreadsheet."
+            + Style.RESET_ALL
+        )
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+    except SpreadsheetNotFound:
+        # Specific handling for when the spreadsheet is not found
+        print(
+            Fore.RED
+            + "Error: The specified spreadsheet was not found."
+            + Style.RESET_ALL
+        )
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+    except APIError as e:
+        # Handling other API errors
+        print(Fore.RED + f"An API error occurred: {e.message}" + Style.RESET_ALL)
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+    except Exception as e:
+        # Generic exception handler for any other unforeseen exceptions
+        print(Fore.RED + f"An unexpected error occurred: {e}" + Style.RESET_ALL)
+        # Log the error and/or take other appropriate actions
+        return None, -1
+
+
+# Update player record in HOF sheet
+
+
+def update_player_record(player, won):
+    """
+    Updates the player's win-loss record in the Hall of Fame spreadsheet.
+
+    Increments the win count if the player won, or the loss count if they lost.
+
+    Args:
+        player (Player): The player object whose record needs updating.
+        won (bool): True if the player won the game, False otherwise.
+    """
+    if won:
+        player.record_win()
+    else:
+        player.record_loss()
+
+    # Aktualisieren Sie die Daten in der Tabelle unter Verwendung des Spielersindex
+    HOF_SHEET.update_cell(player.index, 2, player.games_won)
+    HOF_SHEET.update_cell(player.index, 3, player.games_lost)
+
+    return f"Updated record for {player.name}: Wins - {player.games_won}, Losses - {player.games_lost}"
+
+
 # Prepare game
 
 
 def prepare_game(player_name, vs_computer, player2_name=""):
     """
-    Prepares the game environment by setting up players and clearing the screen.
+    Prepares the game environment by setting up players.
 
-    This function first clears the screen and then finds or adds the first player using their name.
-    It greets the first player accordingly. If the game is not against the computer, it repeats the
-    process for the second player using 'player2_name'. Finally, it prompts the user to press any key
-    to start the game and clears the screen again.
+    Finds or adds the first player and optionally a second player if not playing against the computer.
+    Clears the screen and prompts the user to start the game.
 
     Args:
-        player_name (str): The name of the first player.
-        vs_computer (bool): True if the game is against the computer, False otherwise.
-        player2_name (str, optional): The name of the second player if playing against another player.
-                                      Defaults to an empty string.
+        player_name (str): Name of the first player.
+        vs_computer (bool): True if playing against the computer, False otherwise.
+        player2_name (str): Name of the second player (if applicable).
 
-    Note:
-        This function relies on 'find_player' to locate or add player information and 'greet_player'
-        to greet the players. It also uses a 'clear_screen' method to clear the console screen.
+    Returns:
+        tuple: A tuple containing Player objects for the first and second player.
     """
     clear_screen()
-    existing_player, player1_index = find_player(player_name)
-    greet_player(existing_player, player_name)
+    player1 = find_player(player_name)
+    if player1:
+        player1.greet()
 
+    player2 = None
     if not vs_computer:
-        existing_player2, player2_index = find_player(player2_name)
-        greet_player(existing_player2, player2_name)
+        player2 = find_player(player2_name)
+        if player2:
+            player2.greet()
+
     input("Press any key to start the game...")
     clear_screen()
+
+    return player1, player2
 
 
 # Get valid player
@@ -89,17 +360,16 @@ def prepare_game(player_name, vs_computer, player2_name=""):
 
 def get_valid_player_name(prompt="Enter your name"):
     """
-    Prompts the user to input a player name and validates it.
+    Prompts the user for a valid player name and validates it.
 
-    The function repeatedly prompts the user until a valid name is entered. A valid name must be at least
-    three characters long and contain at least one alphabetic character. If the input is invalid,
-    an error message is displayed and the user is prompted again.
+    A valid name must be at least three characters long, contain at least one alphabetic character,
+    and only consist of letters, numbers, and spaces.
 
     Args:
-        prompt (str, optional): The prompt message to display. Defaults to "Enter your name".
+        prompt (str): The prompt to display to the user.
 
     Returns:
-        str: A validated player name that meets the criteria.
+        str: A validated player name.
     """
     while True:
         player_name = input(
@@ -150,52 +420,22 @@ def find_player(player_name):
         cell = HOF_SHEET.find(player_name)
         if cell:
             player_data = HOF_SHEET.row_values(cell.row)
-            player = {
-                "player_name": player_data[0],
-                "games_won": int(player_data[1]),
-                "games_lost": int(player_data[2]),
-            }
-            return player, cell.row
+            player = Player(player_name)
+            player.games_won = int(player_data[1])
+            player.games_lost = int(player_data[2])
+            player.index = cell.row
+            return player
 
-        # Handling when the player is not found
-        if any(char.isalpha() for char in player_name) and len(player_name) > 2:
-            new_index = add_new_player(player_name)
-            return None, new_index
         else:
-            print(Fore.RED + "Invalid player name." + Style.RESET_ALL)
-            return None, -1
+            if any(char.isalpha() for char in player_name) and len(player_name) > 2:
+                new_index = add_new_player(player_name)
+                player = Player(player_name)
+                player.index = new_index
+                return player
 
-    except WorksheetNotFound:
-        # Specific handling for when a worksheet is not found
-        print(
-            Fore.RED
-            + "Error: The specified worksheet was not found in the spreadsheet."
-            + Style.RESET_ALL
-        )
-        # Log the error and/or take other appropriate actions
-        return None, -1
-
-    except SpreadsheetNotFound:
-        # Specific handling for when the spreadsheet is not found
-        print(
-            Fore.RED
-            + "Error: The specified spreadsheet was not found."
-            + Style.RESET_ALL
-        )
-        # Log the error and/or take other appropriate actions
-        return None, -1
-
-    except APIError as e:
-        # Handling other API errors
-        print(Fore.RED + f"An API error occurred: {e.message}" + Style.RESET_ALL)
-        # Log the error and/or take other appropriate actions
-        return None, -1
-
-    except Exception as e:
-        # Generic exception handler for any other unforeseen exceptions
-        print(Fore.RED + f"An unexpected error occurred: {e}" + Style.RESET_ALL)
-        # Log the error and/or take other appropriate actions
-        return None, -1
+    except (WorksheetNotFound, SpreadsheetNotFound, APIError, Exception) as e:
+        print(Fore.RED + f"An error occurred: {e}" + Style.RESET_ALL)
+        return None
 
 
 # Add player if not found in sheet
@@ -203,17 +443,13 @@ def find_player(player_name):
 
 def add_new_player(player_name):
     """
-     Adds a new player to the Hall of Fame (HOF) sheet.
+    Adds a new player to the Hall of Fame spreadsheet.
 
     Args:
-        player_name (str): The name of the player to be added.
+        player_name (str): The name of the new player to add.
 
     Returns:
-        int: The index of the newly added player in the HOF sheet.
-
-    Note:
-        This function depends on the 'HOF_SHEET' global variable, which should support
-        'append_row' and 'get_all_records' methods.
+        int: The row index of the newly added player in the HOF sheet.
     """
     new_player_data = [player_name, 0, 0]
     HOF_SHEET.append_row(new_player_data)
@@ -225,91 +461,19 @@ def add_new_player(player_name):
     return new_index
 
 
-# Greet players
-
-
-def greet_player(existing_player, player_name):
-    """
-    Greets the player by displaying a welcome message and their game statistics.
-
-    If the player exists (i.e., 'existing_player' is not None), the function displays a welcome back message
-    along with the player's game statistics (games won and lost). If the player is new (i.e., 'existing_player'
-    is None), a welcome message for a new player is displayed. All messages are color-coded for visual distinction.
-
-    Args:
-        existing_player (dict or None): A dictionary containing the player's data (name, games won, games lost)
-                                        if they exist, otherwise None.
-        player_name (str): The name of the player.
-
-    Note:
-        This function uses the 'Fore' class from the 'colorama' module to color the text displayed in the console.
-    """
-    if existing_player:
-        print(Fore.CYAN + f"Welcome back, {existing_player['player_name']}!")
-        print(Fore.GREEN + f"Won Games: {existing_player['games_won']}")
-        print(Fore.RED + f"Lost Games: {existing_player['games_lost']}\n")
-    else:
-        print(Fore.CYAN + f"Welcome, {player_name}!\n")
-    print(Style.RESET_ALL)
-
-
-# Update records
-
-
-def update_player_record(player_index, won):
-    """
-    Updates the win-loss record of a player in the Hall of Fame (HOF) sheet.
-
-    Retrieves the current record of a player from the HOF sheet using their index,
-    then updates the record based on the game outcome. If the player won, their wins count is incremented;
-    if they lost, their losses count is incremented. The updated record is then saved back to the HOF sheet.
-
-    Args:
-        player_index (int): The index of the player in the HOF sheet.
-        won (bool): True if the player won the game, False otherwise.
-
-    Returns:
-        str: A message indicating the player's updated record.
-
-    Note:
-        This function relies on the 'HOF_SHEET' global variable and assumes that
-        the win and loss counts are in the second and third columns, respectively.
-    """
-    player_record = HOF_SHEET.row_values(player_index)
-    new_wins = int(player_record[1])
-    new_losses = int(player_record[2])
-
-    if won:
-        new_wins += 1
-        HOF_SHEET.update_cell(player_index, 2, new_wins)
-    else:
-        new_losses += 1
-        HOF_SHEET.update_cell(player_index, 3, new_losses)
-
-    return f"Updated record for player at index {player_index}: Wins - {new_wins}, Losses - {new_losses}"
-
-
 # Player move
 
 
-def get_player_move(player_name):
+def get_player_move(player_name, board):
     """
     Prompts the player to choose a column for their move or to quit the game.
 
-    The function repeatedly prompts the player to select a column by entering a number from 1 to 7,
-    or to press 'Q' to quit. If the input is 'Q', the player is asked to confirm their decision to quit.
-    If the input is a valid column number, it is returned as an integer. Invalid inputs result in
-    an error message and the prompt is repeated.
-
     Args:
         player_name (str): The name of the player making the move.
+        board (Board): The current game board.
 
     Returns:
-        int or None: The chosen column as an integer (0-6), or None if the player chooses to quit.
-
-    Note:
-        This function handles input validation and displays messages using the 'Fore' class from the
-        'colorama' module for text coloring. The returned column number is zero-indexed.
+        int or None: The chosen column number, or None if the player chooses to quit.
     """
     while True:
         col_input = input(
@@ -332,7 +496,14 @@ def get_player_move(player_name):
         elif col_input.isdigit():
             col = int(col_input) - 1
             if 0 <= col < 7:
-                return col
+                if board.is_valid_location(col):
+                    return col
+                else:
+                    print(
+                        Fore.RED
+                        + "Column is full. Please choose a different column.\n"
+                        + Style.RESET_ALL
+                    )
             else:
                 print(
                     Fore.RED
@@ -352,23 +523,14 @@ def get_player_move(player_name):
 
 def check_for_blocking_move(board, player_piece):
     """
-    Identifies a potential blocking move against the opponent.
-
-    This function scans the game board to find a move that would block the opponent from winning.
-    It temporarily simulates the opponent's moves on the board. If a simulated move results in a win for the opponent,
-    that column is identified as a potential blocking move and its index is returned.
+    Identifies a column where a blocking move can be made against the opponent.
 
     Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
+        board (Board): The current game board.
         player_piece (str): The piece representation of the current player.
 
     Returns:
-        int or None: The index of the column where a blocking move can be made, or None if no blocking move is found.
-
-    Note:
-        This function assumes the board is a 6x7 grid and relies on 'is_valid_location' to check if a column can be played,
-        and 'check_win' to determine if a move results in a win. The piece representations for players are formatted using
-        the 'colorama' module.
+        int or None: The column index for a blocking move, or None if no such move is found.
     """
     opponent_piece = (
         Fore.GREEN + "P" + Style.RESET_ALL
@@ -378,13 +540,13 @@ def check_for_blocking_move(board, player_piece):
 
     for c in range(7):
         for r in range(6):
-            if board[r][c] == " " and is_valid_location(board, c):
+            if board.grid[r][c] == " " and board.is_valid_location(c):
                 # Temporarily simulate an opponent's move
-                board[r][c] = opponent_piece
-                if check_win(board, opponent_piece):
-                    board[r][c] = " "  # Undo the move
+                board.grid[r][c] = opponent_piece
+                if board.check_win(opponent_piece):
+                    board.grid[r][c] = " "  # Undo the move
                     return c  # Return the blocking column
-                board[r][c] = " "  # Undo the move if it does not result in a win
+                board.grid[r][c] = " "  # Undo the move if it does not result in a win
 
     return None
 
@@ -394,23 +556,14 @@ def check_for_blocking_move(board, player_piece):
 
 def get_computer_move(board, player_piece):
     """
-    Determines the computer's move in the game.
-
-    The function first checks for any potential blocking moves to prevent the player from winning on their next turn.
-    If a blocking move is found, it is returned as the computer's move. If no blocking move is necessary,
-    the function selects a random valid column from the available locations on the board.
+    Determines the computer's move based on the current state of the board.
 
     Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
-        player_piece (str): The piece representation of the current player.
+        board (Board): The current game board.
+        player_piece (str): The piece representation of the player.
 
     Returns:
-        int: The index of the column chosen for the computer's move.
-
-    Note:
-        This function relies on 'check_for_blocking_move' to identify possible blocking moves and
-        'is_valid_location' to determine valid columns for placing a piece. It uses the 'random'
-        module to select a random column from valid locations.
+        int: The chosen column index for the computer's move.
     """
     blocking_move = check_for_blocking_move(board, player_piece)
     if blocking_move is not None:
@@ -425,41 +578,14 @@ def get_computer_move(board, player_piece):
 
 def create_board():
     """
-    Creates a new game board for playing.
+    Creates a new game board for Connect Four.
 
-    Initializes a 6x7 grid to represent the game board, with each cell initially set to an empty space.
-    This grid represents the standard layout for the game with 6 rows and 7 columns.
+    Initializes a 6x7 grid with each cell set to empty space.
 
     Returns:
-        list of lists: A 2D list representing the game board, with each element initialized to " ".
+        list: A 2D list representing the game board.
     """
     return [[" " for _ in range(7)] for _ in range(6)]
-
-
-# Print board
-
-
-def print_board(board):
-    """
-    Displays the game board in a readable format.
-
-    Clears the console screen and then prints the current state of the game board. Each cell of the board
-    is displayed, along with column numbers at the top for reference. The board is represented in a grid format
-    with each cell separated by vertical bars.
-
-    Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
-
-    Note:
-        This function uses 'clear_screen' to clear the console before displaying the board. The board layout
-        includes headers for columns and separators for rows.
-    """
-    clear_screen()
-    print(" 1 2 3 4 5 6 7")
-    print("---------------")
-    for row in board:
-        print("|" + "|".join(row) + "|")
-    print("---------------\n")
 
 
 # Validation check
@@ -467,20 +593,17 @@ def print_board(board):
 
 def is_valid_location(board, col):
     """
-    Determines if a move can be made in a specified column.
-
-    Checks if the top cell of the given column is empty, indicating that a piece can be dropped in this column.
-    Also ensures that the column index is within the valid range of the board (0 to 6).
+    Checks if a move can be made in the specified column.
 
     Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
-        col (int): The index of the column to check for a valid move.
+        board (Board): The current game board.
+        col (int): The column index to check.
 
     Returns:
-        bool: True if the move is valid (the column is within range and not full), False otherwise.
+        bool: True if the top cell of the column is empty, False otherwise.
     """
     if 0 <= col < 7:
-        return board[0][col] == " "
+        return board.grid[0][col] == " "
     else:
         return False
 
@@ -490,20 +613,17 @@ def is_valid_location(board, col):
 
 def get_next_open_row(board, col):
     """
-    Finds the next open row in a specified column.
-
-    Iterates through the rows of the given column, starting from the bottom, to find the first available
-    (empty) row. This is where a new piece can be placed. If the column is full, no open row is available.
+    Finds the next open row in a specified column on the board.
 
     Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
-        col (int): The index of the column to check for an open row.
+        board (Board): The current game board.
+        col (int): The column index to check.
 
     Returns:
-        int: The index of the next open row in the specified column, or -1 if the column is full.
+        int: The row index of the next open cell, or -1 if the column is full.
     """
     for row in range(5, -1, -1):
-        if board[row][col] == " ":
+        if board.grid[row][col] == " ":
             return row
     return -1
 
@@ -513,86 +633,15 @@ def get_next_open_row(board, col):
 
 def place_piece(board, row, col, piece):
     """
-    Places a piece on the game board at the specified location.
-
-    Updates the board by placing the given piece in the specified row and column. This function is typically
-    called after confirming that the location is valid and available for a new piece.
+    Places a piece on the board at the specified row and column.
 
     Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
-        row (int): The row index where the piece is to be placed.
-        col (int): The column index where the piece is to be placed.
-        piece (str): The representation of the piece to place on the board.
-
-    Note:
-        This function modifies the board in-place and does not return any value.
+        board (Board): The game board.
+        row (int): The row index to place the piece.
+        col (int): The column index to place the piece.
+        piece (str): The piece to place on the board.
     """
-    board[row][col] = piece
-
-
-# Check win conditions
-
-
-def check_win(board, piece):
-    """
-    Checks if the current piece placement results in a win.
-
-    The function examines the board to see if there are four consecutive pieces of the same type
-    in a row, column, or diagonally. This check is performed across the entire board. A win occurs
-    if any such sequence of four is found.
-
-    Args:
-        board (list of lists): The current state of the game board, represented as a 2D list.
-        piece (str): The piece to check for a winning sequence.
-
-    Returns:
-        bool: True if a winning sequence is found, False otherwise.
-
-    Note:
-        The function checks all possible winning combinations - horizontal, vertical, and both
-        diagonal directions. It is designed to work with a 6x7 board.
-    """
-    for row in range(6):
-        for col in range(4):
-            if (
-                board[row][col] == piece
-                and board[row][col + 1] == piece
-                and board[row][col + 2] == piece
-                and board[row][col + 3] == piece
-            ):
-                return True
-
-    for row in range(3):
-        for col in range(7):
-            if (
-                board[row][col] == piece
-                and board[row + 1][col] == piece
-                and board[row + 2][col] == piece
-                and board[row + 3][col] == piece
-            ):
-                return True
-
-    for row in range(3):
-        for col in range(4):
-            if (
-                board[row][col] == piece
-                and board[row + 1][col + 1] == piece
-                and board[row + 2][col + 2] == piece
-                and board[row + 3][col + 3] == piece
-            ):
-                return True
-
-    for row in range(3):
-        for col in range(3, 7):
-            if (
-                board[row][col] == piece
-                and board[row + 1][col - 1] == piece
-                and board[row + 2][col - 2] == piece
-                and board[row + 3][col - 3] == piece
-            ):
-                return True
-
-    return False
+    board.grid[row][col] = piece
 
 
 # Game instructions
@@ -602,16 +651,7 @@ def show_game_instructions():
     """
     Displays the instructions for playing Connect Four.
 
-    Clears the screen and shows a stylized title 'Game Instructions'. The instructions cover the
-    basics of how to play Connect Four, including the layout of the game board, the symbols used
-    to represent the players and the computer in single-player and two-player modes, and the
-    objective of the game. The instructions also explain the turn-taking process and the goal to
-    connect four discs in a row. The function prompts the user to press Enter to return to the
-    main menu after reading the instructions.
-
-    Note:
-        This function uses 'pyfiglet' for stylized text formatting, 'colorama' for text coloring,
-        and 'clear_screen' to clear the console before displaying the instructions.
+    Clears the screen and shows a detailed explanation of the game rules.
     """
     clear_screen()
     print(
@@ -651,15 +691,7 @@ def show_hall_of_fame():
     """
     Displays the Hall of Fame, listing players and their win-loss records.
 
-    The function clears the screen and presents a stylized title 'Hall of Fame'. It then retrieves
-    and displays the player data from the Hall of Fame sheet, including player names, number of games
-    won, and number of games lost. The data is formatted in a tabular form for readability. After displaying
-    the list, the function prompts the user to press Enter to return to the main menu.
-
-    Note:
-        This function uses 'pyfiglet' for the title formatting, 'colorama' for text coloring, and
-        'clear_screen' to clear the console. It relies on the global variable 'HOF_SHEET' to retrieve
-        player data.
+    Clears the screen and presents player statistics in a tabular format.
     """
     clear_screen()
     print(
@@ -750,45 +782,31 @@ def start_game(player_name, vs_computer=True, player2_name=""):
     """
     Initiates and manages a game of Connect Four.
 
-    The function prepares the game by setting up players and the game board. It alternates turns between
-    the player and the opponent (either another player or the computer). On each turn, it prompts for a move,
-    validates it, updates the board, and checks for a win or a tie. If a player wins or the game ends in a tie,
-    it offers the option to play again. Player win/loss records are updated after each game.
+    Sets up players and the game board, alternates turns, and checks for game end conditions.
+    Offers the option to play again and updates player records after each game.
 
     Args:
-        player_name (str): The name of the first player.
-        vs_computer (bool, optional): True to play against the computer, False to play against another player.
-                                      Defaults to True.
-        player2_name (str, optional): The name of the second player, if playing against another player.
-                                      Defaults to an empty string.
-
-    Note:
-        This function uses 'prepare_game' to set up the game, 'create_board' to create the game board,
-        and 'print_board' to display the board. It relies on several other functions to handle game logic,
-        including 'get_player_move', 'is_valid_location', 'get_next_open_row', 'place_piece', 'check_win',
-        and 'update_player_record'. It also uses the 'colorama' module for text coloring.
+        player_name (str): Name of the first player.
+        vs_computer (bool): True to play against the computer, False for a two-player game.
+        player2_name (str): Name of the second player, if applicable.
     """
-    prepare_game(player_name, vs_computer, player2_name)
-    existing_player, player1_index = find_player(player_name)
-    player2_index = None
-    if not vs_computer:
-        _, player2_index = find_player(player2_name)
+    player1, player2 = prepare_game(player_name, vs_computer, player2_name)
 
-    board = create_board()
-    print_board(board)
+    board = Board()
+    board.print_board()
     game_over = False
     turn = 0
 
     while not game_over:
         if turn == 0:
-            col = get_player_move(player_name)
+            col = get_player_move(player_name, board)
             if col is None:
                 return
-            if is_valid_location(board, col):
-                row = get_next_open_row(board, col)
-                place_piece(board, row, col, Fore.GREEN + "P" + Style.RESET_ALL)
-                print_board(board)
-                if check_win(board, Fore.GREEN + "P" + Style.RESET_ALL):
+            if board.is_valid_location(col):
+                row = board.get_next_open_row(col)
+                board.add_piece(row, col, Fore.GREEN + "P" + Style.RESET_ALL)
+                board.print_board()
+                if board.check_win(Fore.GREEN + "P" + Style.RESET_ALL):
                     print(f"Congratulations, {player_name}! You won!\n")
                     game_over = True
                 else:
@@ -798,19 +816,19 @@ def start_game(player_name, vs_computer=True, player2_name=""):
             if vs_computer:
                 col = get_computer_move(board, Fore.RED + "C" + Style.RESET_ALL)
             else:
-                col = get_player_move(player2_name)
+                col = get_player_move(player2_name, board)
                 if col is None:
                     return
-            if is_valid_location(board, col):
-                row = get_next_open_row(board, col)
+            if board.is_valid_location(col):
+                row = board.get_next_open_row(col)
                 piece = (
                     Fore.RED + "C" + Style.RESET_ALL
                     if vs_computer
                     else Fore.YELLOW + "O" + Style.RESET_ALL
                 )
-                place_piece(board, row, col, piece)
-                print_board(board)
-                if check_win(board, piece):
+                board.add_piece(row, col, piece)
+                board.print_board()
+                if board.check_win(piece):
                     winner = (
                         player_name
                         if turn == 0
@@ -821,38 +839,32 @@ def start_game(player_name, vs_computer=True, player2_name=""):
                 else:
                     turn = 0
 
-        if all(row.count("P") + row.count("O") == 7 for row in board):
+        if all(row.count("P") + row.count("O") == 7 for row in board.grid):
             print(Fore.YELLOW + "It's a tie!")
             print(Style.RESET_ALL)
             game_over = True
 
         if game_over:
-            if player1_index is not None:
-                update_player_record(player1_index, True if turn == 0 else False)
-            if (
-                player2_index is not None
-                and not vs_computer
-                and player2_index != player1_index
-            ):
-                update_player_record(player2_index, True if turn == 1 else False)
+            if player1 is not None:
+                update_player_record(player1, True if turn == 0 else False)
+            if player2 is not None and not vs_computer:
+                update_player_record(player2, True if turn == 1 else False)
 
-            while True:
+            play_again_valid = False
+            while not play_again_valid:
                 play_again = input("Do you want to play again? (y/n):\n").lower()
                 if play_again == "y":
-                    prepare_game(player_name, vs_computer, player2_name)
-                    board = create_board()
-                    print_board(board)
+                    player1, player2 = prepare_game(player_name, vs_computer, player2_name)
+                    board = Board()
+                    board.print_board()
                     game_over = False
                     turn = 0
-                    break
+                    play_again_valid = True
                 elif play_again == "n":
+                    play_again_valid = True
                     break
                 else:
-                    print(
-                        Fore.RED
-                        + "Invalid input. Please enter 'y' or 'n'.\n"
-                        + Style.RESET_ALL
-                    )
+                    print(Fore.RED + "Invalid input. Please enter 'y' or 'n'.\n" + Style.RESET_ALL)
 
 
 # Run game
@@ -862,14 +874,7 @@ def run_game():
     """
     Executes the main loop of the game.
 
-    This function continuously displays the main menu and allows the user to navigate through different
-    game options (such as starting a new game, viewing instructions, or checking the Hall of Fame) as long
-    as the global variable 'is_running' is True. The loop breaks and the game ends when 'is_running' is set to False.
-
-    Note:
-        The function relies on the global variable 'is_running' to maintain the game loop and calls
-        'main_menu' to display the menu and handle user interaction. Changes to 'is_running' are expected
-        to be made within 'main_menu' or other functions called from it.
+    Continuously displays the main menu and allows user interaction until the game is exited.
     """
     while is_running:
         main_menu()
@@ -880,17 +885,8 @@ if __name__ == "__main__":
 
 
 # Main menu
-"""
-    Displays the main menu and handles user selections for different game options.
 
-    This function presents the main menu of the game, providing options to start a new game against the 
-    computer or another player, view game instructions, see the Hall of Fame, or quit the game. 
-    It processes the user's choice and directs to the appropriate action or game mode. The menu remains 
-    active until the user chooses to exit the game.
-
-    Note:
-        This function is part of the main game loop controlled by the global variable 'is_running'. It uses 
-        'pyfiglet' for stylized text display and 'colorama' for text coloring. The menu options are handled 
-        by calling respective functions such as 'start_game', 'show_game_instructions', and 'show_hall_of_fame'.
-    """
 main_menu()
+"""
+Displays the main menu of the Connect Four game and handles user input for game options.
+"""
