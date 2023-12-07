@@ -797,10 +797,8 @@ class Player:
             print(Fore.GREEN + f"Won Games: {self.games_won}")
             print(Fore.RED + f"Lost Games: {self.games_lost}\n")
         else:
-            print(
-                Fore.CYAN +
-                f"Welcome, {
-                    self.name}! Good luck on your first game!\n")
+            print(Fore.CYAN + f"Welcome, {self.name}! "
+                            "Good luck on your first game!\n")
         print(Style.RESET_ALL)
 
 
