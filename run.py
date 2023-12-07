@@ -411,13 +411,11 @@ def update_player_record(player, won):
     else:
         player.record_loss()
 
-    # Aktualisieren Sie die Daten in der Tabelle unter Verwendung des
-    # Spielersindex
     HOF_SHEET.update_cell(player.index, 2, player.games_won)
     HOF_SHEET.update_cell(player.index, 3, player.games_lost)
 
-    return f"Updated record for {
-        player.name}: Wins - {player.games_won}, Losses - {player.games_lost}"
+    return (f"Updated record for {player.name}: "
+            f"Wins - {player.games_won}, Losses - {player.games_lost}")
 
 
 # Player move
@@ -609,7 +607,7 @@ def place_piece(board, row, col, piece):
     board.grid[row][col] = piece
 
 
-# Classes
+## Classes
 
 
 # Class board
