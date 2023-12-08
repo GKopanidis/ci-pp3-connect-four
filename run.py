@@ -103,8 +103,18 @@ def main_menu():
                 start_game(player_name, vs_computer=True)
             elif choice == "2":
                 player1_name = get_valid_player_name("Player 1")
-                player2_name = get_valid_player_name("Player 2")
-                start_game(player1_name, vs_computer=False, player2_name=player2_name)
+                while True:
+                    player2_name = get_valid_player_name("Player 2")
+                    if player2_name.lower() != player1_name.lower():
+                        break
+                    else:
+                        err_msg_1 = Fore.RED + "Player 2 cannot have the same"
+                        err_msg_2 = "name as Player 1. Please choose a"
+                        err_msg_3 = "different name.\n" + Style.RESET_ALL
+                        print(err_msg_1 + err_msg_2 + err_msg_3)
+                start_game(player1_name,
+                           vs_computer=False,
+                           player2_name=player2_name)
             elif choice == "3":
                 show_game_instructions()
             elif choice == "4":
@@ -616,7 +626,7 @@ def place_piece(board, row, col, piece):
     board.grid[row][col] = piece
 
 
-## Classes
+# Classes
 
 
 # Class board
@@ -807,7 +817,7 @@ class Player:
             print(Fore.RED + f"Lost Games: {self.games_lost}\n")
         else:
             print(Fore.CYAN + f"Welcome, {self.name}! "
-                            "Good luck on your first game!\n")
+                              "Good luck on your first game!\n")
         print(Style.RESET_ALL)
 
 
