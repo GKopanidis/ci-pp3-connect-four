@@ -211,7 +211,8 @@ def start_game(player_name, vs_computer=True, player2_name=""):
                 else:
                     turn = 0
 
-        if all(row.count("P") + row.count("O") == 7 for row in board.grid):
+        if all(row.count(Fore.GREEN + "P" + Style.RESET_ALL) + 
+               row.count(Fore.YELLOW + "O" + Style.RESET_ALL) == 7 for row in board.grid):
             print(Fore.YELLOW + "It's a tie!")
             print(Style.RESET_ALL)
             game_over = True
@@ -643,6 +644,7 @@ def place_piece(board, row, col, piece):
         piece (str): The piece to place on the board.
     """
     board.grid[row][col] = piece
+
 
 # Classes
 
