@@ -8,6 +8,7 @@ import pyfiglet
 from colorama import just_fix_windows_console
 from colorama import Fore, Back, Style
 import os
+import time
 
 just_fix_windows_console()
 
@@ -79,9 +80,6 @@ def main_menu():
     """
     global is_running
     while is_running:
-        """
-        Show welcome message and menu
-        """
         clear_screen()
         print(
             Fore.YELLOW
@@ -99,29 +97,40 @@ def main_menu():
         choice = input("Please choose an option (1/2/3/4/5):\n")
         print()
 
-        if choice == "1":
-            player_name = get_valid_player_name()
-            start_game(player_name, vs_computer=True)
-        elif choice == "2":
-            player1_name = get_valid_player_name("Player 1")
-            player2_name = get_valid_player_name("Player 2")
-            start_game(player1_name, vs_computer=False,
-                       player2_name=player2_name)
-        elif choice == "3":
-            show_game_instructions()
-        elif choice == "4":
-            show_hall_of_fame()
-        elif choice == "5":
-            clear_screen()
-            print(
-                Fore.YELLOW
-                + pyfiglet.figlet_format(
-                    "ByeBye, thank you for playing!", font="bulbhead"
+        if choice in ["1", "2", "3", "4", "5"]:
+            if choice == "1":
+                player_name = get_valid_player_name()
+                start_game(player_name, vs_computer=True)
+            elif choice == "2":
+                player1_name = get_valid_player_name("Player 1")
+                player2_name = get_valid_player_name("Player 2")
+                start_game(player1_name, vs_computer=False, player2_name=player2_name)
+            elif choice == "3":
+                show_game_instructions()
+            elif choice == "4":
+                show_hall_of_fame()
+            elif choice == "5":
+                clear_screen()
+                print(
+                    Fore.YELLOW
+                    + pyfiglet.figlet_format(
+                        "ByeBye, thank you for playing!", font="bulbhead"
+                    )
+                    + Style.RESET_ALL
                 )
-                + Style.RESET_ALL
-            )
-            is_running = False
-            return
+                is_running = False
+                return
+        else:
+            countdown = 2
+            while countdown > 0:
+                print(
+                    Fore.RED
+                    + f"Invalid input. You can retry in {countdown} seconds..."
+                    + Style.RESET_ALL, end="\r"
+                )
+                time.sleep(1)
+                countdown -= 1
+            print(" " * 80, end="\r")
 
 
 # Start game
