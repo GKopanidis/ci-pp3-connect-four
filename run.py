@@ -224,26 +224,39 @@ def start_game(player_name, vs_computer=True, player2_name=""):
 
             play_again_valid = False
             while not play_again_valid:
-                play_again = (input("Do you want to play again? (y/n):\n")
-                              .lower())
+                play_again_prompt = "Do you want to play again? (y/n):\n"
+                play_again = input(play_again_prompt).lower()
                 if play_again == "y":
-                    player1, player2 = prepare_game(
-                        player_name, vs_computer, player2_name
-                    )
+                    print("\nStarting a new game...")
+                    countdown = 2
+                    while countdown > 0:
+                        msg_1 = f"New game starts in {countdown}"
+                        msg_2 = " seconds..."
+                        print(msg_1 + msg_2, end="\r")
+                        time.sleep(1)
+                        countdown -= 1
+                    print(" " * 40, end="\r")
+                    player1, player2 = prepare_game(player_name,
+                                                    vs_computer,
+                                                    player2_name)
                     board = Board()
                     board.print_board()
                     game_over = False
                     turn = 0
                     play_again_valid = True
                 elif play_again == "n":
+                    print("\nReturning to main menu...")
+                    countdown = 2
+                    while countdown > 0:
+                        print(f"Returning in {countdown} seconds...", end="\r")
+                        time.sleep(1)
+                        countdown -= 1
+                    print(" " * 40, end="\r")
                     play_again_valid = True
                     break
                 else:
-                    print(
-                        Fore.RED
-                        + "Invalid input. Please enter 'y' or 'n'.\n"
-                        + Style.RESET_ALL
-                    )
+                    error_message = "Invalid input. Please enter 'y' or 'n'.\n"
+                    print(Fore.RED + error_message + Style.RESET_ALL)
 
 
 # Run game
@@ -454,15 +467,21 @@ def get_player_move(player_name, board):
     """
     while True:
         col_input = input(
-            f"{player_name}, choose a column to place your piece (1-7), "
+            f"\n{player_name}, choose a column to place your piece (1-7), "
             f"or press 'Q' to quit: \n"
         )
 
         if col_input.lower() == "q":
             confirm_quit = input(
-                "Are you sure you want to quit? (y/n): \n").lower()
+                "\nAre you sure you want to quit? (y/n): \n").lower()
             if confirm_quit == "y":
-                print("\nQuitting the game.\n")
+                print("\nReturning to main menu...")
+                countdown = 2
+                while countdown > 0:
+                    print(f"Returning in {countdown} seconds...", end="\r")
+                    time.sleep(1)
+                    countdown -= 1
+                print(" " * 40, end="\r")
                 return None
             elif confirm_quit == "n":
                 continue
@@ -624,7 +643,6 @@ def place_piece(board, row, col, piece):
         piece (str): The piece to place on the board.
     """
     board.grid[row][col] = piece
-
 
 # Classes
 
