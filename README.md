@@ -1,32 +1,46 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# [Connect Four](https://ci-pp3-connect-four-8982dfb728aa.herokuapp.com/)
 
-Welcome,
+Connect Four is an interactive Python game that combines the classic strategy of Connect Four with modern programming techniques.
+The game supports both single-player (against a computer opponent) and two-player modes.
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+![Mockup-connect-four](https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/9f8f1d9a-4087-49b2-ae09-2577b3a9ddca)
 
-## Reminders
+[Connect-Four live site](https://ci-pp3-connect-four-8982dfb728aa.herokuapp.com/)
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+## [Index - Table of Contents](#index---table-of-contents)
 
-## Creating the Heroku app
+- [Introduction](#introduction)
+   - [Site Goals](#site-goals)
+   - [Target Audience](#target-audience)
+   - [User stories](#user-stories)
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+- [Overview](#overview)
+  - [Features](#features)
+  - [Existing Features](#existing-features)
+  - [Features Planned](#features-planned)
 
-1. `heroku/python`
-2. `heroku/nodejs`
+- [Technolgies](#technologies)
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+   - [Technolgies used](#technologies)
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+- [Logical Flow](#logical-flow)
 
-Connect your GitHub repository and deploy as normal.
+- [Testing](#testing)
 
-## Constraints
+   - [Pep8 Validation](#pep8-validation)
+   - [Light House Reports](#lighthouse)
+   - [Browser Testing](#tested-browser)
+   - [Manual Testing](#manual-testing)
+   - [Fixed Bugs](#fixed-bugs)
+   - [Unfixed Bugs](#unfixed-bugs)
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+- [Deployment](#deployment)
+   - [Version Control](#version-control)
+   - [Deployment to Github Pages](#deployment-github)
+   - [Heroku Deployment](#deployment-heroku)
+   - [Clone the Repository Code Locally](#clone-repo-locally)
+      
+- [Credits](#credits)
 
----
-
-Happy coding!
+   - [Content](#content)
+   - [Media](#media)
