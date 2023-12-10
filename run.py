@@ -942,4 +942,3 @@ Displays the main menu of the Connect Four game and handles user input
 for game options.
 """
 main_menu()
-
