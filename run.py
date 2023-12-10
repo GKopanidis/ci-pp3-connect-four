@@ -937,8 +937,9 @@ if __name__ == "__main__":
 
 # Main menu
 
-main_menu()
 """
 Displays the main menu of the Connect Four game and handles user input
 for game options.
 """
+main_menu()
+
