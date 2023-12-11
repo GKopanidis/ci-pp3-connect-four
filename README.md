@@ -33,8 +33,8 @@ The game supports both single-player (against a computer opponent) and two-playe
 
 - [Deployment](#deployment)
    - [Version Control](#version-control)
-   - [Deployment to Github Pages](#deployment-github)
-   - [Heroku Deployment](#deployment-heroku)
+   - [Deployment to Github Pages](#deployment-to-github-pages)
+   - [Heroku Deployment](#heroku-deployment)
    - [Clone the Repository Code Locally](#clone-locally)
       
 - [Credits](#credits)
@@ -229,7 +229,7 @@ The Connect Four Python Game comes equipped with a variety of features that make
    
    ```git push``` - This command was used to push all committed code to the remote repository on Git Hub.
 
-   ## Deploying on GitHub Pages
+   ## Deployment to GitHub Pages
 
    To deploy this page to Heroku from its Gitpod repository, the following steps were taken:
    
