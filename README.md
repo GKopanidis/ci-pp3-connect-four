@@ -25,8 +25,8 @@ The game supports both single-player (against a computer opponent) and two-playe
 - [Testing](#testing)
 
    - [Pep8 Validation](#pep8-validation)
-   - [Light House Report](#lighthouse-report)
-   - [Browser Testing](#tested-browser)
+   - [Light House Report](#light-house-report)
+   - [Tested Browser](#tested-browser)
    - [Manual Testing](#manual-testing)
    - [Fixed Bugs](#fixed-bugs)
    - [Unfixed Bugs](#unfixed-bugs)
@@ -205,6 +205,9 @@ The Connect Four Python Game comes equipped with a variety of features that make
 
      **NOTE:**
          Since the template from CodeInstitute must be used, it is known that it does not work correctly for Mac/Safari and iOS/Safari.
+
+### Manual Testing
+   to be continued...
 
 ## Fixed Bugs
    - No bugs found at this time
