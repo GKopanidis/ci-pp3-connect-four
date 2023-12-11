@@ -10,9 +10,8 @@ The game supports both single-player (against a computer opponent) and two-playe
 ## [Index - Table of Contents](#index-table-of-contents)
 
 - [Introduction](#Introduction)
-   - [Site Goals](#Site-Goals)
    - [Target Audience](#Target-Audience)
-   - [User stories](#User-Stories)
+   - [Site Goals](#Site-Goals)
 
 - [Overview](#overview)
   - [Features](#features)
@@ -49,6 +48,10 @@ The game supports both single-player (against a computer opponent) and two-playe
 
 Welcome to the Connect Four Python Game, an interactive and fun adaptation of the classic two-player connection game, now available in a Python console application. This engaging project is designed for both beginners and seasoned players, offering an immersive experience in the world of text-based gaming.
 
+### Target Audience
+
+The Connect Four Python Game is designed to captivate a diverse audience, encompassing everyone from programming novices who are delving into the world of Python, to casual gamers seeking a quick and strategic challenge.
+
 ### Site Goals
 
 As a User:
@@ -68,7 +71,6 @@ As a User:
    - **Accessibility and Learning:**
       - Easy to Learn: The game should be simple enough for beginners to understand and start playing quickly.
       - Educational Value: Opportunity to learn basic strategies of Connect Four for first-time players.
-
     
 As a Creator:
 
@@ -89,7 +91,43 @@ As a Creator:
       - Achieving Goals: Successfully bringing a game concept to life.
       - Personal Fulfillment: A sense of accomplishment from creating a game that people enjoy.
     
+## Overview
 
-### Target Audience
+### Features
 
-The Connect Four Python Game is designed to captivate a diverse audience, encompassing everyone from programming novices who are delving into the world of Python, to casual gamers seeking a quick and strategic challenge. 
+The Connect Four Python Game comes equipped with a variety of features that make it both engaging and functional. Here’s an overview of the existing features you’ll find in this game:
+
+### Existing Features
+
+   - **Interactive Gameplay:**
+      - Two Modes of Play: Players can choose to play against a computer AI for a challenging experience or opt for a two-player mode for a competitive game against a friend.
+      - Dynamic Game Board: A 6x7 grid that closely replicates the traditional Connect Four game, providing a familiar yet refreshed gaming experience.
+
+   - **User Experience:**
+     - Clear Console Interface: The game boasts a user-friendly console interface, making navigation and gameplay straightforward and enjoyable.
+     - Color-Coded Pieces: Different colors represent different players, enhancing the visual aspect of the game and making it easy to track moves.
+       
+   - **Performance and Reliability:**
+     - Efficient Codebase: The game is built with efficiency in mind, ensuring smooth gameplay.
+     - Error Handling: Robust error handling is in place to minimize crashes and bugs, providing a seamless gaming experience.
+
+   - **Player Progress Tracking:**
+     - Hall of Fame Integration: The game integrates with Google Sheets to record player statistics, including wins and losses, offering players a sense of progression and achievement.
+
+   - **Educational Aspect:**
+     - Code Comments and Documentation: The source code is well-documented and commented, making it an excellent resource for those looking to learn Python or understand game development basics.
+
+   - **Customization and Expansion Potential:**
+     - Modifiable Code: Players with programming knowledge can easily modify or extend the game's features, offering a customizable experience.
+
+### Features Planned
+
+   - **Advanced AI Decision-Making:**
+      - We're working on empowering the AI to make more strategic choices, enhancing the challenge for players in single-player mode. This improvement will ensure that each game against the computer is not just engaging but also tests the player's strategic skills to the fullest.
+
+   - **Integrated Timer Functionality:**
+     - To add an element of excitement and urgency, we plan to introduce a timer feature. This will set a time limit for each player's turn, making the game more dynamic and fast-paced.
+
+   - **Varied Game Modes: Easy and Hard:**
+     - Recognizing that our players have different skill levels and preferences, we're introducing multiple game modes. An 'Easy' mode will cater to beginners or those looking for a more relaxed gameplay experience, while the 'Hard' mode will challenge seasoned players with a more sophisticated AI opponent.
+
