@@ -47,11 +47,13 @@ The game supports both single-player (against a computer opponent) and two-playe
 
 Welcome to the Connect Four Python Game, an interactive and fun adaptation of the classic two-player connection game, now available in a Python console application. This engaging project is designed for both beginners and seasoned players, offering an immersive experience in the world of text-based gaming.
 
-[Back to Top](#Introduction)
+[Back to Top](#index-table-of-contents)
 
 ### Target Audience
 
 The Connect Four Python Game is designed to captivate a diverse audience, encompassing everyone from programming novices who are delving into the world of Python, to casual gamers seeking a quick and strategic challenge.
+
+[Back to Top](#index-table-of-contents)
 
 ### Site Goals
 
