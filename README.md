@@ -109,7 +109,12 @@ The Connect Four Python Game comes equipped with a variety of features that make
 
    - **Interactive Gameplay:**
       - Two Modes of Play: Players can choose to play against a computer AI for a challenging experience or opt for a two-player mode for a competitive game against a friend.
+
+        <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/3495f9c1-437f-405d-9368-4e960d168c59" width="50%" height="50%">
+
       - Dynamic Game Board: A 6x7 grid that closely replicates the traditional Connect Four game, providing a familiar yet refreshed gaming experience.
+    
+        <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/66796bb6-bbe4-463a-a390-2366f6a80348" width="50%" height="50%">
 
    - **User Experience:**
      - Clear Console Interface: The game boasts a user-friendly console interface, making navigation and gameplay straightforward and enjoyable.
