@@ -20,8 +20,6 @@ The game supports both single-player (against a computer opponent) and two-playe
 
 - [Technolgies](#technologies)
 
-   - [Technolgies used](#technologies)
-
 - [Logical Flow](#logical-flow)
 
 - [Testing](#testing)
@@ -83,7 +81,6 @@ As a Creator:
       - Problem-Solving: Tackling various technical and design challenges that arise during development.
      
    - **Community Engagement and Feedback:**
-  
       - User Feedback: Receiving constructive feedback from users to help improve the game.
       - Community Interaction: Engaging with a community of users and developers, facilitating knowledge exchange and collaboration.
 
@@ -131,3 +128,24 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - **Varied Game Modes: Easy and Hard:**
      - Recognizing that our players have different skill levels and preferences, we're introducing multiple game modes. An 'Easy' mode will cater to beginners or those looking for a more relaxed gameplay experience, while the 'Hard' mode will challenge seasoned players with a more sophisticated AI opponent.
 
+## Technologies
+ 
+- Python ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+   - The logic was created using Python.
+
+- Gitpod ![Gitpod](https://img.shields.io/badge/Gitpod-000000?style=for-the-badge&logo=gitpod&logoColor=#FFAE33)
+   - The app was developed using Gitpod IDE
+
+- GitHub ![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+   - Source code is hosted on GitHub.
+
+- Git ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
+   - Used to commit and push code during the development of the Website
+ 
+- Heroku ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+  - The app was deployed using Heroku.
+ 
+- Shields.io
+   - Shields created with [Shields.io](https://shields.io/badges/static-badge)
+     and
+     [more shields](https://github.com/alexandresanlim/Badges4-README.md-Profile)
