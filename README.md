@@ -305,7 +305,7 @@ Each of these tools and resources has played a significant role in shaping the C
 [Time](https://docs.python.org/3/library/time.html "link to time")
    - The Time module is a key component in the game. It's used for implementing delays and countdowns, enhancing the user experience by providing timely feedback and creating a more dynamic game flow.
 
-[Love Sandwiches](https://github.com/sarahgoodwin93/love-sandwiches "link to love sandwiches")
+[Love Sandwiches](https://github.com/GKopanidis/love-sandwiches-wt "link to love sandwiches")
    - Love Sandwiches was used as part of the education process and was referred back to for the deployment of the project
 
 ## Media
