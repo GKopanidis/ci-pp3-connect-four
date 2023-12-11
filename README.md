@@ -7,6 +7,8 @@ The game supports both single-player (against a computer opponent) and two-playe
 
 [Connect-Four live site](https://ci-pp3-connect-four-8982dfb728aa.herokuapp.com/)
 
+![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/gkopanidis/ci-pp3-connect-four/main) 
+
 ## [Index - Table of Contents](#index-table-of-contents)
 
 - [Connect Four](#connect-four)
