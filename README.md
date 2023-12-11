@@ -55,7 +55,7 @@ Welcome to the Connect Four Python Game, an interactive and fun adaptation of th
 
 The Connect Four Python Game is designed to captivate a diverse audience, encompassing everyone from programming novices who are delving into the world of Python, to casual gamers seeking a quick and strategic challenge.
 
-[Back to Top](#start)
+[Back to Top](#connect-four)
 
 ### Site Goals
 
@@ -94,7 +94,9 @@ As a Creator:
    - **Personal Satisfaction and Accomplishment:**
       - Achieving Goals: Successfully bringing a game concept to life.
       - Personal Fulfillment: A sense of accomplishment from creating a game that people enjoy.
-    
+
+[Back to Top](#connect-four)
+
 ## Overview
 
 ### Features
@@ -135,6 +137,8 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - **Varied Game Modes: Easy and Hard:**
      - Recognizing that our players have different skill levels and preferences, we're introducing multiple game modes. An 'Easy' mode will cater to beginners or those looking for a more relaxed gameplay experience, while the 'Hard' mode will challenge seasoned players with a more sophisticated AI opponent.
 
+[Back to Top](#connect-four)
+
 ## Technologies
  
    - Python ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
@@ -157,9 +161,13 @@ The Connect Four Python Game comes equipped with a variety of features that make
         and
         [more shields](https://github.com/alexandresanlim/Badges4-README.md-Profile)
 
+[Back to Top](#connect-four)
+
 ## Logical Flow
 
 <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/b2df3cd9-2218-4b66-9a2e-d52567bc5d8d" width="50%" height="50%">
+
+[Back to Top](#connect-four)
 
 ## Testing
 ### PEP8 Validation
@@ -221,6 +229,8 @@ The Connect Four Python Game comes equipped with a variety of features that make
 ## Unfixed Bugs
    - No bugs found at this time
 
+[Back to Top](#connect-four)
+
 ## Deployment
 
    ### Version Control
@@ -275,6 +285,8 @@ The Connect Four Python Game comes equipped with a variety of features that make
        * ```git clone https://github.com/GKopanidis/ci-pp3-connect-four.git```
    - Project will now be cloned locally.
 
+[Back to Top](#connect-four)
+
 ## Credits
 
 ## Content
@@ -306,3 +318,5 @@ Each of these tools and resources has played a significant role in shaping the C
 - Thank you to my mentor [Gareth-McGirr](https://github.com/Gareth-McGirr) who provided me with lots of pointers on resources to help on my 3rd project!
 - Thank you to [Salko Nuhanovic](https://github.com/salkonuhannovic) who helped me on the player_move and computer_move functions!
 - Thank you to Raphael Kopanidis who helped me on the classes!
+
+[Back to Top](#connect-four)
