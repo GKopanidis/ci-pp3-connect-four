@@ -154,3 +154,12 @@ The Connect Four Python Game comes equipped with a variety of features that make
 
 <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/b2df3cd9-2218-4b66-9a2e-d52567bc5d8d" width="50%" height="50%">
 
+## Testing
+
+   - [PEP8 validator](https://pep8ci.herokuapp.com/)
+     
+     <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/972ffe37-59f0-43d4-b975-aaa0e67d8c30" width="50%" height="50%">
+
+   - [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=en)
+
+     <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/8c06b31c-83db-41a9-beed-416d7ed7538d" width="50%" height="50%">
