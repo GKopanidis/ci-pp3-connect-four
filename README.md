@@ -149,3 +149,8 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - Shields created with [Shields.io](https://shields.io/badges/static-badge)
      and
      [more shields](https://github.com/alexandresanlim/Badges4-README.md-Profile)
+
+## Logical Flow
+
+<img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/b2df3cd9-2218-4b66-9a2e-d52567bc5d8d" width="50%" height="50%">
+
