@@ -35,7 +35,7 @@ The game supports both single-player (against a computer opponent) and two-playe
    - [Version Control](#version-control)
    - [Deployment to Github Pages](#deployment-github)
    - [Heroku Deployment](#deployment-heroku)
-   - [Clone the Repository Code Locally](#clone-repo-locally)
+   - [Clone the Repository Code Locally](#clone-locally)
       
 - [Credits](#credits)
 
@@ -208,3 +208,57 @@ The Connect Four Python Game comes equipped with a variety of features that make
 
 ## Unfixed Bugs
    - No bugs found at this time
+
+## Deployment
+
+   ### Version Control
+
+   The site was created using the Gitpod IDE and pushed to Git Hub to the remote repository ‘ci-pp3-connect-four’.
+   
+   The following git commands were used throughout development to push code to the remote repo:
+   
+   ```git add <file>``` - This command was used to add the file(s) to the staging area before they are committed.
+   
+   ```git commit -m “commit message”``` - This command was used to commit changes to the local repository queue ready for the final step.
+   
+   ```git push``` - This command was used to push all committed code to the remote repository on Git Hub.
+
+   ## Deploying on GitHub Pages
+
+   To deploy this page to Heroku from its Gitpod repository, the following steps were taken:
+   
+   1. Get Python Essentials Template from Code Institute [P3 Template](https://github.com/Code-Institute-Org/p3-template "p3 template link")
+   2. Create a new repository using the P3 template 
+   3. Copy the repo URL and copy it into Gitpod to create a new workspace
+   4. Close the README tab and create the first file named index.html
+   5. Open the terminal, type (git add .) (git commit -m "initial commit") (git push)
+   6. Type 'Pip3 freeze > requirements.txt' into the terminal and commit. 
+   7. Log into [Heroku]( https://id.heroku.com/login "Link to Heroku login page") 
+   8. Create a new app and name it "connect-four"
+   9. Add config vars - The key is PORT and the value is 8000
+   10. Add build pack, select Python - click save, then select node.js - click save - in that order
+   11. Go to the deploy section - select automatic deploys (If you prefer not to have automatic deploys, you can select the 'Manual Deploy' option below)
+   12. The project is now deployed.
+       
+   [Connect-Four live site](https://ci-pp3-connect-four-8982dfb728aa.herokuapp.com/)
+
+   ### Heroku Deployment
+
+   The below steps were followed to deploy this project to Heroku:
+
+   - Go to Heroku and click "New" to create a new app.
+   - Choose an app name and region region, click "Create app".
+   - Go to "Settings" and navigate to Config Vars. Add the following config variables:
+      - PORT : 8000
+      - Navigate to Buildpacks and add buildpacks for Python and NodeJS (in that order).
+   - Navigate to "Deploy". Set the deployment method to Github and enter repository name and connect.
+   - Scroll down to Manual Deploy, select "main" branch and click "Deploy Branch".
+   - The app will now be deployed to heroku
+
+   [Connect-Four live site](https://ci-pp3-connect-four-8982dfb728aa.herokuapp.com/)
+
+   ### Clone Locally
+
+   - Open IDE of choice and type the following into the terminal:
+       * ```git clone https://github.com/GKopanidis/ci-pp3-connect-four.git```
+   - Project will now be cloned locally.
