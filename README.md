@@ -129,7 +129,7 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - **Player Progress Tracking:**
      - Hall of Fame Integration: The game integrates with Google Sheets to record player statistics, including wins and losses, offering players a sense of progression and achievement.
     
-       <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/7b080edd-e0c9-46eb-8416-d19c03dd8813" width="50%" height="50%">
+       <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/81a59f23-5657-4915-8636-d6284c3d9ccf" width="50%" height="50%">
 
    - **Educational Aspect:**
      - Code Comments and Documentation: The source code is well-documented and commented, making it an excellent resource for those looking to learn Python or understand game development basics.
