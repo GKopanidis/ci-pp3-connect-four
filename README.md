@@ -119,7 +119,9 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - **User Experience:**
      - Clear Console Interface: The game boasts a user-friendly console interface, making navigation and gameplay straightforward and enjoyable.
      - Color-Coded Pieces: Different colors represent different players, enhancing the visual aspect of the game and making it easy to track moves.
-       
+
+       <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/49bde1cc-7b94-41ae-a8f0-255eff0afdef" width="50%" height="50%">
+
    - **Performance and Reliability:**
      - Efficient Codebase: The game is built with efficiency in mind, ensuring smooth gameplay.
      - Error Handling: Robust error handling is in place to minimize crashes and bugs, providing a seamless gaming experience.
