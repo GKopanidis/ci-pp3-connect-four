@@ -160,6 +160,9 @@ The Connect Four Python Game comes equipped with a variety of features that make
      
      <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/972ffe37-59f0-43d4-b975-aaa0e67d8c30" width="50%" height="50%">
 
+     **NOTE:**
+         Some errors that were found and fixed included: "Trailing whitespace" and "Line too long"
+
    - [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=en)
 
      <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/8c06b31c-83db-41a9-beed-416d7ed7538d" width="50%" height="50%">
@@ -199,3 +202,9 @@ The Connect Four Python Game comes equipped with a variety of features that make
 
      **NOTE:**
          Since the template from CodeInstitute must be used, it is known that it does not work correctly for Mac/Safari and iOS/Safari.
+
+## Fixed Bugs
+   - No bugs found at this time
+
+## Unfixed Bugs
+   - No bugs found at this time
