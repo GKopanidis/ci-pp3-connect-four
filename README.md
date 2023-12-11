@@ -130,25 +130,25 @@ The Connect Four Python Game comes equipped with a variety of features that make
 
 ## Technologies
  
-- Python ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
-   - The logic was created using Python.
+   - Python ![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+      - The logic was created using Python.
 
-- Gitpod ![Gitpod](https://img.shields.io/badge/Gitpod-000000?style=for-the-badge&logo=gitpod&logoColor=#FFAE33)
-   - The app was developed using Gitpod IDE
+   - Gitpod ![Gitpod](https://img.shields.io/badge/Gitpod-000000?style=for-the-badge&logo=gitpod&logoColor=#FFAE33)
+      - The app was developed using Gitpod IDE
 
-- GitHub ![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
-   - Source code is hosted on GitHub.
+   - GitHub ![Github](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)
+      - Source code is hosted on GitHub.
 
-- Git ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
-   - Used to commit and push code during the development of the Website
+   - Git ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
+      - Used to commit and push code during the development of the Website
  
-- Heroku ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
-  - The app was deployed using Heroku.
+   - Heroku ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
+     - The app was deployed using Heroku.
  
-- Shields.io
-   - Shields created with [Shields.io](https://shields.io/badges/static-badge)
-     and
-     [more shields](https://github.com/alexandresanlim/Badges4-README.md-Profile)
+   - Shields.io
+      - Shields created with [Shields.io](https://shields.io/badges/static-badge)
+        and
+        [more shields](https://github.com/alexandresanlim/Badges4-README.md-Profile)
 
 ## Logical Flow
 
@@ -163,3 +163,39 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview?hl=en)
 
      <img src="https://github.com/GKopanidis/ci-pp3-connect-four/assets/145017421/8c06b31c-83db-41a9-beed-416d7ed7538d" width="50%" height="50%">
+
+   - Tested Browser (latest versions):
+     <table>
+       <thead>
+       <tr>
+       <th align="center">Browser</th>
+       <th align="center">Layout</th>
+       <th align="center">Functionality</th>
+       </tr>
+       </thead>
+       <tbody>
+         <tr>
+         <td align="center">Chrome</td>
+         <td align="center">✔</td>
+         <td align="center">✔</td>
+         </tr>
+         <tr>
+         <td align="center">Edge</td>
+         <td align="center">✔</td>
+         <td align="center">✔</td>
+         </tr>
+         <tr>
+         <td align="center">Firefox</td>
+         <td align="center">✔</td>
+         <td align="center">✔</td>
+         </tr>
+         <tr>
+         <td align="center">Safari</td>
+         <td align="center">✔</td>
+         <td align="center">❌</td>
+         </tr>
+       </tbody>
+     </table>
+
+     **NOTE:**
+         Since the template from CodeInstitute must be used, it is known that it does not work correctly for Mac/Safari and iOS/Safari.
