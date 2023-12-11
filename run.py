@@ -903,7 +903,7 @@ def show_hall_of_fame():
     clear_screen()
     print(
         Fore.YELLOW
-        + pyfiglet.figlet_format("Game Instructions", font="bulbhead")
+        + pyfiglet.figlet_format("Hall of Fame", font="bulbhead")
         + Style.RESET_ALL
     )
     print(f"{'Player':<20} {'Wins':<10} {'Losses':<10}")
