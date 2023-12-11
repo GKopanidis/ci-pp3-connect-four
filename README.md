@@ -7,12 +7,12 @@ The game supports both single-player (against a computer opponent) and two-playe
 
 [Connect-Four live site](https://ci-pp3-connect-four-8982dfb728aa.herokuapp.com/)
 
-## [Index - Table of Contents](#index---table-of-contents)
+## [Index - Table of Contents](#index-table-of-contents)
 
-- [Introduction](#introduction)
-   - [Site Goals](#site-goals)
-   - [Target Audience](#target-audience)
-   - [User stories](#user-stories)
+- [Introduction](#Introduction)
+   - [Site Goals](#Site-Goals)
+   - [Target Audience](#Target-Audience)
+   - [User stories](#User-Stories)
 
 - [Overview](#overview)
   - [Features](#features)
@@ -88,3 +88,8 @@ As a Creator:
    - **Personal Satisfaction and Accomplishment:**
       - Achieving Goals: Successfully bringing a game concept to life.
       - Personal Fulfillment: A sense of accomplishment from creating a game that people enjoy.
+    
+
+### Target Audience
+
+The Connect Four Python Game is designed to captivate a diverse audience, encompassing everyone from programming novices who are delving into the world of Python, to casual gamers seeking a quick and strategic challenge. 
