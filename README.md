@@ -41,6 +41,7 @@ The game supports both single-player (against a computer opponent) and two-playe
 
    - [Content](#content)
    - [Media](#media)
+   - [Acknowledgments](#acknowledgments)
  
 ## Introduction
 
@@ -262,3 +263,35 @@ The Connect Four Python Game comes equipped with a variety of features that make
    - Open IDE of choice and type the following into the terminal:
        * ```git clone https://github.com/GKopanidis/ci-pp3-connect-four.git```
    - Project will now be cloned locally.
+
+## Credits
+
+## Content
+
+Each of these tools and resources has played a significant role in shaping the Connect Four Python Game, contributing to its functionality, user experience, and overall aesthetic appeal.
+
+[Colorama](https://pypi.org/project/colorama/ "link to colorama")
+   - Colorama is an essential tool used in our game for adding color to the console output. It enhances the visual aspect of the game, making it more engaging and easier to differentiate between various elements, such as player pieces.
+
+[Pyfiglet](https://pypi.org/project/pyfiglet/ "link to pyfiglet")
+   - Pyfiglet plays a crucial role in elevating the game's interface. It is used for generating ASCII art text, which adds a visually appealing and professional touch to the game's headings and displays.
+
+[Clear screen](https://www.geeksforgeeks.org/clear-screen-python/ "link to clear screen")
+   - The Clear Screen method is integral to maintaining a clean and organized display in the console. It helps in refreshing the screen between turns or actions, ensuring a clutter-free gaming environment.
+
+[Time](https://docs.python.org/3/library/time.html "link to time")
+   - The Time module is a key component in the game. It's used for implementing delays and countdowns, enhancing the user experience by providing timely feedback and creating a more dynamic game flow.
+
+[Love Sandwiches](https://github.com/sarahgoodwin93/love-sandwiches "link to love sandwiches")
+   - Love Sandwiches was used as part of the education process and was referred back to for the deployment of the project
+
+## Media
+
+**Background image for Main-Page:**
+   - AI image generator
+
+### Acknowledgments
+
+- Thank you to my mentor [Gareth-McGirr](https://github.com/Gareth-McGirr) who provided me with lots of pointers on resources to help on my 3rd project!
+- Thank you to [Salko Nuhanovic](https://github.com/salkonuhannovic) who helped me on the player_move and computer_move functions!
+- Thank you to Raphael Kopanidis who helped me on the classes!
