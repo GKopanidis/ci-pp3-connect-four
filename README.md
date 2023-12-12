@@ -232,7 +232,28 @@ The Connect Four Python Game comes equipped with a variety of features that make
          Since the template from CodeInstitute must be used, it is known that it does not work correctly for Mac/Safari and iOS/Safari.
 
 ### Manual Testing
-   to be continued...
+| Feature                           | Expectation                                              | Action                                            | Result                                                   |
+|-----------------------------------|----------------------------------------------------------|---------------------------------------------------|----------------------------------------------------------|
+| **Main Menu**                     | The main menu displays options for starting a game against the computer, another player, viewing game instructions, viewing the Hall of Fame, and quitting the game. | Start the game | The respective submenu is displayed based on the selected option. |
+| **Enter Player Name**             | When entering a player name, this name is used during the game. | Enter the player's name and confirm | The entered name is used in the game. |
+| **Invalid Player Name**           | Rejects names that are too short, long, or contain invalid characters. | Enter an invalid name | Displays an error message and prompts for re-entry. |
+| **Start Game against Computer**   | Starts a new game against the computer. | Select this option in the main menu | The game against the computer begins. |
+| **Start Game against Another Player** | Starts a game against another human player. | Select this option and enter player names | A game between two human players begins. |
+| **Same Name for Both Players**    | Prevents both players from using the same name in a two-player game. | Enter the same name for both players | Displays an error message and asks for a different name for the second player. |
+| **Display Game Instructions**     | Displays instructions and rules for the game. | Select this option in the main menu | Game instructions are displayed. |
+| **Display Hall of Fame**          | Shows the Hall of Fame with player statistics. | Select this option in the main menu | Hall of Fame with player statistics is displayed. |
+| **Quit Game**                     | Quits the game and returns to the operating system. | Select this option in the main menu | The game is exited, and the program is closed. |
+| **Make a Move**                   | Allows players to place a game piece in a column. | Enter the column number | The game piece is placed in the chosen column. |
+| **Invalid Move Entry**            | Rejects invalid column numbers or characters. | Enter a non-numeric value or an out-of-range number | Displays an error message and asks for a valid column number. |
+| **Out of Range Move**             | Rejects column numbers outside the valid range (1-7). | Enter a number outside the range 1-7 | Displays an error message indicating the range and asks for a valid column number. |
+| **Non-numeric Move Entry**        | Rejects non-numeric inputs when a column number is expected. | Enter a letter or symbol | Displays an error message and asks for a numeric column number. |
+| **Check for Win Condition**       | Checks if a player has won the game. | After each move | If a player wins, a victory message is displayed. |
+| **Play Again (y/n)**              | Asks the player if they want to play again after a game ends. | Enter 'y' for yes or 'n' for no | Restarts the game or returns to the main menu based on the input. |
+| **Invalid 'Play Again' Input**    | Requires a valid response to the play again prompt. | Enter a character other than 'y' or 'n' | Displays an error message and asks for 'y' or 'n'. |
+| **Quit During Game (q)**          | Allows the player to quit to the main menu during the game. | Press 'q' during a move prompt | Confirms the quit action and returns to the main menu. |
+| **Invalid Quit Confirmation**     | Requires a valid response to the quit confirmation. | Enter a character other than 'y' or 'n' after pressing 'q' | Displays an error message and returns to the move prompt. |
+
+
 
 ## Fixed Bugs
    - No bugs found at this time
